@@ -1,0 +1,150 @@
+{
+  "construction": {
+    "base": 4,
+    "basis_translation": 0,
+    "cardinality": 24,
+    "diameter": 587202577,
+    "diameter_upper_bound": 587202577,
+    "h": 2,
+    "isolation_distance": 2,
+    "label_scheme": "powers",
+    "labels": [
+      70,
+      280,
+      1120,
+      4480,
+      17920,
+      71680,
+      286720,
+      1146880,
+      4587520,
+      18350080,
+      73400320,
+      293601280
+    ],
+    "n": 3,
+    "negative_terms": [
+      -70,
+      -280,
+      -1120,
+      -4480,
+      -17920,
+      -71680,
+      -286720,
+      -1146880,
+      -4587520,
+      -18350080,
+      -73400320,
+      -293601280
+    ],
+    "positive_terms": [
+      63,
+      274,
+      1115,
+      4476,
+      17923,
+      71684,
+      286725,
+      1146886,
+      4587534,
+      18350095,
+      73400336,
+      293601297
+    ],
+    "relation_order": 4,
+    "scale": 70,
+    "starts": [
+      -7,
+      3,
+      14
+    ],
+    "target_intervals": [
+      {
+        "end": -4,
+        "start": -7
+      },
+      {
+        "end": 6,
+        "start": 3
+      },
+      {
+        "end": 17,
+        "start": 14
+      }
+    ],
+    "target_radius": 17,
+    "target_translation": 0,
+    "values": [
+      -293601280,
+      -73400320,
+      -18350080,
+      -4587520,
+      -1146880,
+      -286720,
+      -71680,
+      -17920,
+      -4480,
+      -1120,
+      -280,
+      -70,
+      63,
+      274,
+      1115,
+      4476,
+      17923,
+      71684,
+      286725,
+      1146886,
+      4587534,
+      18350095,
+      73400336,
+      293601297
+    ]
+  },
+  "schema_version": 1,
+  "statistics": {
+    "exceptional_point_count": 288,
+    "minimum_exceptional_spacing": 77,
+    "minimum_exceptional_to_target_distance": 109,
+    "sumset_cardinality": 300,
+    "sumset_sha256": "3d5f692b5b1d5ec706d11948b16daed1d937ed70fdc36256a75b686b1341b2bf",
+    "target_point_count": 12
+  },
+  "verification": {
+    "actual_nontrivial_intervals": [
+      {
+        "end": -4,
+        "start": -7
+      },
+      {
+        "end": 6,
+        "start": 3
+      },
+      {
+        "end": 17,
+        "start": 14
+      }
+    ],
+    "expected_intervals": [
+      {
+        "end": -4,
+        "start": -7
+      },
+      {
+        "end": 6,
+        "start": 3
+      },
+      {
+        "end": 17,
+        "start": 14
+      }
+    ],
+    "first_failure": null,
+    "h": 2,
+    "isolated_exceptional_point_count": 288,
+    "missing_intervals": [],
+    "missing_target_points": [],
+    "ok": true,
+    "unexpected_intervals": []
+  }
+}

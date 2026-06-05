@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "interval-bases"
+version = "0.1.0"
+description = "Reproducible experiments for interval additive bases with signed integers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "All rights reserved" }
+authors = [{ name = "Zijie Yu", email = "256001428@nbu.edu.cn" }]
+dependencies = []
+
+[project.scripts]
+interval-bases = "interval_bases.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

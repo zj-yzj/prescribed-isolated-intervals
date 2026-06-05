@@ -1,0 +1,106 @@
+# Computational Appendix
+
+## Definitions
+
+For a finite integer set `A`, the implementation computes the exact sumset
+
+```text
+hA = {a_1 + ... + a_h : a_i in A}.
+```
+
+The function `ell(A, h)` returns the largest `n` such that `[0, n]` is
+contained in `hA`. The function `ell_sharp(A, h)` returns the largest value of
+`v - u` over all consecutive intervals `[u, v]` contained in `hA`.
+
+## Exact Versus Bounded Searches
+
+`enumerate_exact_prefix_extremum(h, k)` computes `n_h(k)` exactly. It uses the
+counting bound
+
+```text
+n_h(k) <= binomial(h + k - 1, k - 1) - 1
+```
+
+and the fact that an extremal nonnegative basis can be taken inside
+`[0, n_h(k)]`.
+
+The functions `scan_nonnegative_window(...)` and `scan_signed_window(...)`
+only report extrema inside the requested finite window. They are discovery
+tools and must not be cited as global proofs.
+
+## Reproduction
+
+```powershell
+python -m pytest
+python -m interval_bases oeis-check --max-stamps 3
+python -m interval_bases construct `
+  --starts=-6,2 `
+  --h 3 `
+  --length 2 `
+  --distance 2 `
+  --output certificates/example-h3.json `
+  --include-sumset
+python -m interval_bases construct `
+  --scheme moments `
+  --starts=1000000 `
+  --h 2 `
+  --length 3 `
+  --distance 4 `
+  --output certificates/moments-large-translation.json
+python -m interval_bases construct `
+  --scheme sidon `
+  --starts=1000000 `
+  --h 2 `
+  --length 3 `
+  --distance 4 `
+  --output certificates/sidon-large-translation.json
+```
+
+The certificate records the label scheme, constructed set, all maximal nontrivial runs in
+`hA`, the minimum spacing between exceptional points, the minimum distance
+from an exceptional point to a target point, and a SHA-256 digest of `2A`.
+
+The `moments` scheme implements the polynomial-diameter refinement. It first
+centers the target pattern by a multiple of `h`, then replaces exponential
+positional labels with the finite moment labels proved in the paper.
+
+The `sidon` scheme is specialized to `h = 2`. It uses shifted Sidon labels
+whose largest value is quadratic in the number of target points. This gives a
+sharper quadratic diameter bound for double sumsets. The Lean development
+also checks that the explicit basis has quadratic diameter from below.
+
+## Lean Verification
+
+The arithmetic, representation-decoding, exceptional-count uniqueness,
+set-level isolation, interval-family packaging, maximal-run characterization,
+and exact-cardinality theorem are checked separately:
+
+```powershell
+$env:PATH="$env:USERPROFILE\.elan\bin;$env:PATH"
+lake build
+```
+
+The precise scope is recorded in
+[`formalization-status.md`](formalization-status.md).
+The finite moment separation lemma, closed diameter estimate, midpoint
+centering theorem, and interval-family polynomial-label closure are now part
+of the Lean boundary. For the shifted-Sidon
+formula, Lean checks pair-sum injectivity, order-four short-relation freedom,
+the concrete set-level isolation theorem, translation invariance, the
+quadratic diameter upper and lower bounds, tightened Bertrand-prime estimate,
+exact cardinality after translation, and the final separated-interval
+wrapper. Lean also selects a midpoint translation, centered radius, and scale
+automatically. Exact
+Python tests and the saved certificate provide an independent computational check.
+Lean also checks the direct Problem 7(2) witness `{-1, 1, 2}` and the
+containment `[0, 4] subseteq 2A`.
+
+
+## Classical Cross-Checks
+
+The test suite compares exact computations with:
+
+- [OEIS A001208](https://oeis.org/A001208), the postage-stamp problem with
+  three positive denominations. In the notation used here this is `n_h(4)`.
+- [OEIS A001209](https://oeis.org/A001209), the postage-stamp problem with
+  four positive denominations. In the notation used here this is `n_h(5)`.

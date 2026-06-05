@@ -1,0 +1,84 @@
+{
+  "construction": {
+    "base": 5,
+    "basis_translation": 500001,
+    "cardinality": 8,
+    "diameter": 2017,
+    "diameter_upper_bound": 2018,
+    "h": 2,
+    "isolation_distance": 4,
+    "label_scheme": "sidon",
+    "labels": [
+      600,
+      732,
+      888,
+      1008
+    ],
+    "n": 3,
+    "negative_terms": [
+      499401,
+      499269,
+      499113,
+      498993
+    ],
+    "positive_terms": [
+      500599,
+      500732,
+      500889,
+      501010
+    ],
+    "relation_order": 4,
+    "scale": 12,
+    "starts": [
+      1000000
+    ],
+    "target_intervals": [
+      {
+        "end": 1000003,
+        "start": 1000000
+      }
+    ],
+    "target_radius": 2,
+    "target_translation": 1000002,
+    "values": [
+      498993,
+      499113,
+      499269,
+      499401,
+      500599,
+      500732,
+      500889,
+      501010
+    ]
+  },
+  "schema_version": 1,
+  "statistics": {
+    "exceptional_point_count": 32,
+    "minimum_exceptional_spacing": 10,
+    "minimum_exceptional_to_target_distance": 118,
+    "sumset_cardinality": 36,
+    "sumset_sha256": "3ca65b2d624d06bb2a7c3c2baee883b00a0033d71db13445e8fd60444fd112c6",
+    "target_point_count": 4
+  },
+  "verification": {
+    "actual_nontrivial_intervals": [
+      {
+        "end": 1000003,
+        "start": 1000000
+      }
+    ],
+    "expected_intervals": [
+      {
+        "end": 1000003,
+        "start": 1000000
+      }
+    ],
+    "first_failure": null,
+    "h": 2,
+    "isolated_exceptional_point_count": 32,
+    "missing_intervals": [],
+    "missing_target_points": [],
+    "ok": true,
+    "unexpected_intervals": []
+  }
+}

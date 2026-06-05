@@ -1,0 +1,529 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\title{Prescribed Isolated Intervals in Higher Fold Sumsets}
+\author{Zijie Yu\\
+Ningbo University\\
+Ningbo, China\\
+\texttt{256001428@nbu.edu.cn}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give an explicit construction of a finite set of integers whose $h$-fold
+sumset has any prescribed sufficiently separated family of nontrivial
+intervals and no others. This answers Problems 9 and 10 in
+\href{https://arxiv.org/abs/2605.26425}{Nathanson's problem list} with an
+explicit set of size $2q(n+1)$, and also answers the higher-order Problem 11.
+We then replace the initial exponential labels by finite moment labels. For
+fixed $h$, this gives polynomial diameter in the number of prescribed target
+points and works for an arbitrary finite target set. Both label choices are
+instances of a common separated-label principle. For double sumsets, a
+Sidon-label instance improves the diameter bound to quadratic. We record a
+small counterexample to the strict inequality proposed in Problem 7(2).
+\end{abstract}
+
+\section{A short separation lemma}
+
+For an integer vector $v=(v_0,\ldots,v_{s-1})$, write
+$\lVert v\rVert_1=\sum_r |v_r|$.
+
+\begin{lemma}[Positional separation]\label{lem:separation}
+Let $B,M\geq 1$ and $a_r=MB^r$ for $0\leq r<s$. If
+$\lambda,\mu\in\Z^s$, $\lambda\neq\mu$, and
+$\lVert\lambda\rVert_1+\lVert\mu\rVert_1\leq B$, then
+\[
+ \left|\sum_{r=0}^{s-1}(\lambda_r-\mu_r)a_r\right|\geq M.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $z=\lambda-\mu$ and let $R$ be the largest index with $z_R\neq 0$.
+We have $\lVert z\rVert_1\leq B$. If $R=0$, the result is immediate. If
+$R\geq 1$, then
+\begin{align*}
+\left|\sum_{r=0}^{s-1}z_ra_r\right|
+&\geq M\left(|z_R|B^R-\sum_{r<R}|z_r|B^r\right)\\
+&\geq M\left(B^R-(B-1)B^{R-1}\right)
+\geq M.
+\end{align*}
+Here the sum of the absolute values of the lower coefficients is at most
+$B-|z_R|\leq B-1$.
+\end{proof}
+
+\begin{proposition}[Separated-label principle]\label{prop:labels}
+Let $h\geq 2$, $d\geq 1$, and let
+$S=\{t_0,\ldots,t_{m-1}\}\subseteq\Z$ be nonempty. Put
+\[
+ H=h(h-1),
+ \qquad
+ T=\max_{t\in S}|t|.
+\]
+Suppose that $M\geq 2hT+d$ and that integers $a_0,\ldots,a_{m-1}$ satisfy
+\[
+ \left|\sum_{r=0}^{m-1}(\lambda_r-\mu_r)a_r\right|\geq M
+ \tag{1}\label{eq:abstract-separation}
+\]
+whenever $\lambda,\mu\in\Z^m$ are distinct and
+\[
+ \lVert\lambda\rVert_1+\lVert\mu\rVert_1\leq 2H.
+\]
+Then
+\[
+ A=\{t_r+(h-1)a_r:0\leq r<m\}\cup\{-a_r:0\leq r<m\}
+\]
+has $|A|=2m$ and
+\[
+ hA=S\mathbin{\dot\cup}E,
+\]
+where distinct elements of $E$ are at distance at least $d$ from one another
+and every element of $E$ is at distance at least $d$ from $S$.
+\end{proposition}
+
+\begin{proof}
+Attach to $t_r+(h-1)a_r$ the label vector $(h-1)e_r$ and offset $t_r$, and
+attach to $-a_r$ the label vector $-e_r$ and offset $0$. Distinct tagged
+generators have distinct label vectors, combined norm at most $2H$, and
+offsets differing by at most $2T<M$. Thus \eqref{eq:abstract-separation}
+shows that their integer values are distinct, so $|A|=2m$.
+
+Every element of $hA$ is a bounded offset plus $\sum_r v_ra_r$, where
+$\lVert v\rVert_1\leq H$. Let $p_r$ and $u_r$ count the positive and negative
+terms with index $r$ in an $h$-term sum. A zero label vector satisfies
+$(h-1)p_r=u_r$ for every $r$. Since
+\[
+ \sum_r(p_r+u_r)=h\sum_rp_r=h,
+\]
+there is exactly one positive term and $h-1$ matching negative terms. Hence
+the zero-label sums are exactly
+\[
+ (t_r+(h-1)a_r)+(h-1)(-a_r)=t_r.
+\]
+
+Every other sum has a nonzero label vector. Such a vector determines its
+multiset of terms: if two multisets with counts $(p_r,u_r)$ and
+$(p'_r,u'_r)$ had the same nonzero vector but were different, then
+\[
+ u_r-u'_r=(h-1)(p_r-p'_r).
+\]
+Summing and using that both multisets have $h$ terms shows that
+$\sum_rp_r=\sum_rp'_r$. At an index with $p_r>p'_r$, the first multiset
+would contain at least one positive term and $h-1$ matching negative terms.
+It would therefore be the zero-label matched sum, a contradiction.
+
+Finally, every representation offset has absolute value at most $hT$.
+Distinct exceptional sums have distinct label vectors, and an exceptional
+sum also has a label vector distinct from the zero vector of a target.
+Equation~\eqref{eq:abstract-separation} and the offset bound leave a gap of
+at least $M-2hT\geq d$.
+\end{proof}
+
+\section{The construction}
+
+\begin{theorem}[Prescribed isolated intervals]\label{thm:main}
+Let $h\geq 2$, $n\geq 1$, $d\geq 2$, $q\geq 1$, and
+\[
+ C=\{c_1<\cdots<c_q\}\subseteq\Z
+\]
+with $c_{i+1}-c_i\geq n+2$ for all $i$. There is an explicitly constructible
+set $A\subseteq\Z$ with $|A|=2q(n+1)$ such that
+\[
+ hA=S\mathbin{\dot\cup}E,
+ \qquad
+ S=\bigcup_{i=1}^q[c_i,c_i+n],
+\]
+where
+\[
+ |x-y|\geq d
+\]
+whenever $x,y\in E$ are distinct or $x\in E$ and $y\in S$.
+Consequently, the maximal intervals in $hA$ of length at least one are
+exactly the intervals $[c_i,c_i+n]$.
+\end{theorem}
+
+\begin{proof}
+List the $q(n+1)$ elements of $S$ as $t_0,\ldots,t_{m-1}$, where
+$m=q(n+1)$. Set
+\[
+ T=\max_{t\in S}|t|,
+ \qquad M=2hT+d,
+ \qquad B=2h(h-1),
+ \qquad a_r=MB^r,
+\]
+and define
+\[
+ A=\{t_r+(h-1)a_r:0\leq r<m\}\cup\{-a_r:0\leq r<m\}.
+\]
+Lemma~\ref{lem:separation} verifies \eqref{eq:abstract-separation} with
+$B=2h(h-1)$. Proposition~\ref{prop:labels} gives $|A|=2m$, the decomposition
+$hA=S\mathbin{\dot\cup}E$, and the required distance bounds.
+Since $d\geq 2$ and the intervals in $S$ are separated by at least one
+missing integer, no exceptional point can extend a target interval or form a
+new nontrivial interval.
+\end{proof}
+
+\begin{corollary}[Single interval replacement]\label{cor:single}
+For all $h\geq 2$, $c\in\Z$, $n\geq 1$, and $d\geq 2$, there is a set
+$A\subseteq\Z$ with $|A|=2n+2$ such that $[c,c+n]\subseteq hA$, every
+element of $hA\setminus[c,c+n]$ is at distance at least $d$ from every
+other such element and from $[c,c+n]$, and the longest interval in $hA$ has
+length $n$.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:main} with $C=\{c\}$.
+\end{proof}
+
+\begin{corollary}[Problems 9--11]\label{cor:problems}
+In the notation of Problems 9--11 of Nathanson's problem list, the
+assertions hold for every $N_q$ allowed in the question, with
+\[
+ k_C=2q(n+1).
+\]
+\end{corollary}
+
+\begin{proof}
+The hypotheses give $c_{i+1}-c_i\geq N_q\geq n+2$. Apply
+Theorem~\ref{thm:main} with $d=2$, taking $h=2$ for Problems 9--10 and the
+specified value of $h$ for Problem 11.
+\end{proof}
+
+\begin{remark}[Diameter bound]
+The construction in Theorem~\ref{thm:main} satisfies
+\[
+ \operatorname{diam}(A)
+ \leq h(2hT+d)\bigl(2h(h-1)\bigr)^{q(n+1)-1}+T.
+\]
+The bound is intentionally simple rather than optimized.
+\end{remark}
+
+\section{A polynomial diameter refinement}
+
+The power labels in Theorem~\ref{thm:main} make the first construction
+transparent, but their size is exponential in the number of target points.
+The following finite moment encoding gives a polynomial bound for fixed $h$.
+
+\begin{lemma}[Moment separation]\label{lem:moment-separation}
+Let $m,L\geq 1$, put
+\[
+ R=\max(1,m-1),
+ \qquad
+ K=LR^{L-1},
+ \qquad
+ Q=LK=L^2R^{L-1},
+\]
+and define
+\[
+ b_r=\sum_{j=0}^{L-1}r^jQ^j
+ \qquad (0\leq r<m).
+\]
+If $z=(z_0,\ldots,z_{m-1})\in\Z^m$ is nonzero and
+$\lVert z\rVert_1\leq L$, then
+\[
+ \left|\sum_{r=0}^{m-1}z_rb_r\right|\geq 1.
+\]
+\end{lemma}
+
+\begin{proof}
+For $0\leq j<L$, put
+\[
+ \mu_j=\sum_{r=0}^{m-1}z_rr^j.
+\]
+Not all $\mu_j$ vanish. Indeed, if the support of $z$ has size $s$, then
+$s\leq L$, and the first $s$ equations $\mu_j=0$ would form an invertible
+Vandermonde system on the distinct support indices.
+
+Since $|\mu_j|\leq LR^{L-1}=K$, the moment vector has
+$\ell^1$ norm at most $LK=Q$. A nonzero integer coefficient vector with
+$\ell^1$ norm at most $Q$ cannot evaluate to zero in base $Q$: if $J$ is
+its largest nonzero index, the leading term has absolute value at least
+$Q^J$, while all lower terms together have absolute value at most
+$(Q-1)Q^{J-1}$ when $J\geq 1$; the case $J=0$ is immediate. Applying this
+positional domination to $(\mu_0,\ldots,\mu_{L-1})$ proves the claim.
+\end{proof}
+
+\begin{theorem}[Polynomial diameter realization]\label{thm:polynomial}
+Let $h\geq 2$, $d\geq 2$, and let $S\subseteq\Z$ be a nonempty finite set
+with $m=|S|$. There is an explicitly constructible set $A\subseteq\Z$ with
+$|A|=2m$ such that
+\[
+ hA=S\mathbin{\dot\cup}E,
+\]
+where
+\[
+ |x-y|\geq d
+\]
+whenever $x,y\in E$ are distinct or $x\in E$ and $y\in S$.
+
+More precisely, let $\tau\in h\Z$ minimize
+\[
+ T=\max_{t\in S}|t-\tau|.
+\]
+Put
+\[
+ L=2h(h-1),
+ \quad
+ R=\max(1,m-1),
+ \quad
+ Q=L^2R^{L-1},
+\]
+and
+\[
+ P_h(m)=\sum_{j=0}^{L-1}(m-1)^jQ^j.
+\]
+Then $A$ can be chosen with
+\[
+ \operatorname{diam}(A)
+ \leq h(2hT+d)P_h(m)+T.
+\]
+For fixed $h$, the factor $P_h(m)$ is bounded by a polynomial in $m$ of
+degree $L(L-1)$.
+\end{theorem}
+
+\begin{proof}
+Enumerate $S=\{t_0,\ldots,t_{m-1}\}$ and use the parameters in
+Lemma~\ref{lem:moment-separation}. Set
+\[
+ M=2hT+d,
+ \qquad
+ a_r=M\sum_{j=0}^{L-1}r^jQ^j,
+\]
+and first construct the centered set
+\[
+ A_0=
+ \{t_r-\tau+(h-1)a_r:0\leq r<m\}
+ \cup
+ \{-a_r:0\leq r<m\}.
+\]
+Finally, put
+\[
+ A=A_0+\tau/h.
+\]
+
+If $\lambda\neq\mu$ and
+$\lVert\lambda\rVert_1+\lVert\mu\rVert_1\leq L$, then
+$z=\lambda-\mu$ is nonzero and $\lVert z\rVert_1\leq L$.
+Lemma~\ref{lem:moment-separation}, after multiplication by $M$, therefore
+verifies \eqref{eq:abstract-separation} for the centered target set.
+Proposition~\ref{prop:labels} gives $|A_0|=2m$, the matching-label
+decomposition, and the required distance bounds.
+Translating $A_0$ by $\tau/h$ translates $hA_0$ by $\tau$ and does not change
+its diameter.
+
+The labels $a_r$ are strictly increasing. Every element of $A_0$ lies between
+$-a_{m-1}$ and $T+(h-1)a_{m-1}$. Consequently,
+\[
+ \operatorname{diam}(A)=\operatorname{diam}(A_0)
+ \leq ha_{m-1}+T
+ =h(2hT+d)P_h(m)+T.
+\]
+For $m\geq 2$, the displayed expression for $P_h(m)$ is a polynomial of
+degree $L(L-1)$; the case $m=1$ is immediate.
+\end{proof}
+
+\begin{corollary}[Translation-invariant interval bound]\label{cor:poly-interval}
+Under the hypotheses of Theorem~\ref{thm:main}, let
+\[
+ m=q(n+1),
+ \qquad
+ D=c_q+n-c_1.
+\]
+There is a set $A$ with the same isolated interval pattern and
+$|A|=2q(n+1)$ whose diameter is polynomial in $m$ for fixed $h$, with
+\[
+ T\leq \left\lceil\frac{D+h}{2}\right\rceil
+\]
+in the bound of Theorem~\ref{thm:polynomial}. In particular, the bound is
+independent of the absolute location of the prescribed intervals.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:polynomial} to
+$S=\bigcup_i[c_i,c_i+n]$. A multiple $\tau$ of $h$ can be chosen within
+$h/2$ of the midpoint of $[c_1,c_q+n]$, giving the stated bound for $T$.
+\end{proof}
+
+\begin{theorem}[Quadratic diameter for double sumsets]\label{thm:sidon}
+Let $d\geq 2$, and let $S\subseteq\Z$ be a nonempty finite set with $m=|S|$.
+There is an explicitly constructible set $A\subseteq\Z$ with $|A|=2m$ such
+that
+\[
+ 2A=S\mathbin{\dot\cup}E,
+\]
+where distinct elements of $E$ are at distance at least $d$ from one another
+and every element of $E$ is at distance at least $d$ from $S$.
+
+More precisely, let $\tau\in 2\Z$ minimize
+\[
+ T=\max_{t\in S}|t-\tau|,
+\]
+and let $p\geq m$ be an odd prime. For $0\leq r<m$, let $\rho_r$ be the least
+nonnegative residue of $r^2$ modulo $p$, and put
+\[
+ b_r=2p^2+2pr+\rho_r.
+\]
+Then $A$ can be chosen with
+\[
+ \operatorname{diam}(A)\leq 8(4T+d)p^2+T.
+\]
+For $m\geq 2$, Bertrand's postulate allows $p<2m$, giving a quadratic bound
+in $m$. Since $p$ is an integer, the resulting explicit estimate is
+\[
+ \operatorname{diam}(A)
+ \leq 8(4T+d)(2m-1)^2+T.
+\]
+\end{theorem}
+
+\begin{proof}
+First observe that $\{b_0,\ldots,b_{m-1}\}$ is a Sidon set, with repetitions
+allowed in pair sums. Indeed, suppose
+\[
+ b_i+b_j=b_k+b_\ell.
+\]
+Reducing modulo $2p$ gives $\rho_i+\rho_j=\rho_k+\rho_\ell$, because both sides
+lie between $0$ and $2p-2$. It follows that $i+j=k+\ell$. Reducing the residue
+identity modulo $p$ also gives
+\[
+ i^2+j^2\equiv k^2+\ell^2\pmod p.
+\]
+Since $p$ is odd, we obtain $ij\equiv k\ell\pmod p$. Thus the two pairs are the
+roots of the same quadratic polynomial over $\mathbb F_p$. The unordered
+pairs $\{i,j\}$ and $\{k,\ell\}$ agree modulo $p$, hence agree as integer pairs
+because all indices lie in $[0,p)$.
+
+Moreover,
+\[
+ 2p^2\leq b_r<4p^2.
+\]
+Consequently, an equality between two sums of the $b_r$ involving at most four
+terms in total must have the same number of terms on both sides: one term is
+strictly smaller than any sum of two terms. Equal one-term sums are trivial,
+and equal two-term sums are trivial by the Sidon property. Therefore
+\[
+ \sum_r z_rb_r\neq 0
+\]
+for every nonzero integer vector $z$ with $\lVert z\rVert_1\leq 4$.
+
+Set $M=4T+d$, enumerate $S=\{t_0,\ldots,t_{m-1}\}$, and apply
+Proposition~\ref{prop:labels} to the centered targets $t_r-\tau$ and the labels
+$a_r=Mb_r$. Finally translate the resulting basis by $\tau/2$. Since
+$b_r<4p^2$, its diameter is at most
+\[
+ 2M\max_r b_r+T\leq 8(4T+d)p^2+T.
+\]
+The same construction has quadratic diameter from below. Indeed, translation
+does not change diameter, the negative generators contain
+$-Mb_0$ and $-Mb_{m-1}$, and
+\[
+ b_{m-1}-b_0
+ =2p(m-1)+\rho_{m-1}
+ \geq 2m(m-1).
+\]
+Consequently,
+\[
+ \operatorname{diam}(A)\geq 2M m(m-1).
+\]
+\end{proof}
+
+\begin{proposition}[A Sidon-label diameter barrier]\label{prop:sidon-barrier}
+Let $B=\{b_1,\ldots,b_m\}\subseteq\Z$ be a Sidon set, where repetitions are
+allowed in pair sums. Then
+\[
+ \operatorname{diam}(B)\geq \binom{m}{2}.
+\]
+Consequently, any tagged construction that contains the generators
+$-Mb_i$ has diameter at least $M\binom{m}{2}$.
+\end{proposition}
+
+\begin{proof}
+Order the labels so that $b_1<\cdots<b_m$. The $\binom{m}{2}$ positive
+differences $b_j-b_i$, with $i<j$, are distinct. Indeed, an equality
+$b_j-b_i=b_\ell-b_k$ gives $b_j+b_k=b_\ell+b_i$, and the Sidon property
+forces the two ordered index pairs to agree. Every positive difference is at
+most $\operatorname{diam}(B)$, proving the first claim. The second follows
+because the generators $-Mb_i$ already have diameter
+$M\operatorname{diam}(B)$.
+\end{proof}
+
+\begin{remark}[Elementary lower bounds]\label{rem:lower-bounds}
+Let $A\subseteq\Z$ be finite and nonempty, put $k=|A|$, and suppose that
+$S\subseteq hA$ has $m$ elements. Then
+\[
+ m\leq \binom{k+h-1}{h},
+ \qquad
+ \operatorname{diam}(A)\geq \frac{\operatorname{diam}(S)}{h}.
+\]
+Indeed, the first inequality counts unordered $h$-term multisets from $A$,
+and the second follows from
+\[
+ \operatorname{diam}(hA)=h\operatorname{diam}(A).
+\]
+Thus Theorem~\ref{thm:polynomial} supplies a polynomial diameter bound for
+fixed $h$, while Theorem~\ref{thm:sidon} gives a quadratic bound when $h=2$.
+Proposition~\ref{prop:sidon-barrier} shows that the quadratic order is
+unavoidable within the Sidon-label method. Optimizing either the cardinality
+or the degree for $h\geq 3$ remains open.
+\end{remark}
+
+\section{Audit notes and a small counterexample}
+
+The proof above also supplies a replacement proof for the single-interval
+statement in Theorem 4 of Nathanson's preprint. In the current source, the
+displayed separation parameter is
+\[
+ \Delta=\min(3,2|c|+d+2n),
+\]
+while later estimates require a parameter larger than quantities depending
+on $|c|$, $d$, and $n$. The replacement argument avoids that discrepancy.
+
+Problem 7(2) asks whether a negative element forces a strict loss in the
+initial interval. This is false: take $h=2$, $k=3$, and
+\[
+ A=\{-1,1,2\}.
+\]
+Then $[0,4]\subseteq 2A$. To see that $n_2(3)=4$, write a nonnegative
+three-element basis for an initial interval as $\{0,1,a\}$. If $a=2$ or
+$a=3$, its initial interval ends at $4$, while if $a>3$, the integer $3$ is
+missing. Hence $\ell_2(A)=n_2(3)$ even though $\min(A)<0$.
+
+\section{Reproducibility}
+
+The accompanying Python package constructs $A$, computes $hA$, checks all
+maximal consecutive runs, records the minimum exceptional spacing, and emits
+JSON certificates. It also includes exact small-parameter computations
+cross-checked against \href{https://oeis.org/A001208}{OEIS A001208} and
+\href{https://oeis.org/A001209}{OEIS A001209}. The arithmetic separation,
+bounded-offset, matched-count, tagged-representation, exceptional-count
+uniqueness, generic set-level isolation, interval-enumeration, maximal-run,
+and exact-cardinality arguments have also been checked in Lean 4 with Mathlib.
+The resulting Lean theorem automatically selects the target radius and
+substitutes the displayed values of $M$ and $B$. The finite moment-label
+Vandermonde argument, translation rule, closed diameter estimate, exact
+cardinality, midpoint-centering lemma, and interval-family theorem have also
+been formalized. The audit note about the earlier preprint remains an
+ordinary paper argument. For the shifted-Sidon refinement, Lean checks the
+size bounds and the reduction from
+order-four short-relation freedom to set-level isolation, including the
+explicit pair-sum argument over $\mathbb F_p$. It also checks translation
+invariance, quadratic diameter upper and lower bounds, tightened
+Bertrand-prime selection, exact cardinality after translation, and the final
+separated-interval wrapper. The midpoint translation, radius, and scale are
+selected automatically from an enclosing interval. Lean also checks the direct
+Problem 7(2)
+witness $\{-1,1,2\}$ and the containment $[0,4]\subseteq 2A$; the classical
+identification $n_2(3)=4$ remains the short paper argument given above.
+
+\end{document}

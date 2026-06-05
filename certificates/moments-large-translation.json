@@ -1,0 +1,84 @@
+{
+  "construction": {
+    "base": 432,
+    "basis_translation": 500001,
+    "cardinality": 8,
+    "diameter": 52283117977,
+    "diameter_upper_bound": 52283117978,
+    "h": 2,
+    "isolation_distance": 4,
+    "label_scheme": "moments",
+    "labels": [
+      12,
+      969703500,
+      7748638860,
+      26141558988
+    ],
+    "n": 3,
+    "negative_terms": [
+      499989,
+      -969203499,
+      -7748138859,
+      -26141058987
+    ],
+    "positive_terms": [
+      500011,
+      970203500,
+      7749138861,
+      26142058990
+    ],
+    "relation_order": 4,
+    "scale": 12,
+    "starts": [
+      1000000
+    ],
+    "target_intervals": [
+      {
+        "end": 1000003,
+        "start": 1000000
+      }
+    ],
+    "target_radius": 2,
+    "target_translation": 1000002,
+    "values": [
+      -26141058987,
+      -7748138859,
+      -969203499,
+      499989,
+      500011,
+      970203500,
+      7749138861,
+      26142058990
+    ]
+  },
+  "schema_version": 1,
+  "statistics": {
+    "exceptional_point_count": 32,
+    "minimum_exceptional_spacing": 22,
+    "minimum_exceptional_to_target_distance": 19,
+    "sumset_cardinality": 36,
+    "sumset_sha256": "24f6bc2e3116fb3788466f9a80e777dee0d5178cd8f875c63e54d59cf8bff0e1",
+    "target_point_count": 4
+  },
+  "verification": {
+    "actual_nontrivial_intervals": [
+      {
+        "end": 1000003,
+        "start": 1000000
+      }
+    ],
+    "expected_intervals": [
+      {
+        "end": 1000003,
+        "start": 1000000
+      }
+    ],
+    "first_failure": null,
+    "h": 2,
+    "isolated_exceptional_point_count": 32,
+    "missing_intervals": [],
+    "missing_target_points": [],
+    "ok": true,
+    "unexpected_intervals": []
+  }
+}

@@ -1,0 +1,27 @@
+.lake/
+.pytest_cache/
+.vs/
+__pycache__/
+*.egg-info/
+
+# Python
+*.py[cod]
+.venv/
+venv/
+
+# Lean / Lake local artifacts
+build/
+
+# LaTeX build products
+output/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+# Local scratch files
+tmp/

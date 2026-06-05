@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the accompanying preprint."
+title: "Prescribed Isolated Intervals in Higher Fold Sumsets"
+authors:
+  - family-names: "Yu"
+    given-names: "Zijie"
+    affiliation: "Ningbo University"
+    email: "256001428@nbu.edu.cn"
+date-released: 2026-06-05
+repository-code: "https://github.com/zj-yzj/prescribed-isolated-intervals"
+preferred-citation:
+  type: article
+  title: "Prescribed Isolated Intervals in Higher Fold Sumsets"
+  authors:
+    - family-names: "Yu"
+      given-names: "Zijie"
+      affiliation: "Ningbo University"
+      email: "256001428@nbu.edu.cn"
+  year: 2026
