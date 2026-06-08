@@ -54,6 +54,17 @@ Use this as an adversarial review pass before circulating the draft.
 - [ ] Verify the Sidon difference-counting barrier
   `diam(B) >= binomial(m, 2)`.
 
+## Bose--Chowla refinement
+
+- [ ] Check the conversion from a modular `B_H` set in `Z/(Q^H-1)Z` to
+  integer labels with no nonzero relation of `l1` norm at most `2H`.
+- [ ] Verify that the shift `(2H+1)(Q^H-1)` prevents cancellations between
+  sums with different numbers of terms.
+- [ ] Check the diameter estimate
+  `h(2hT+d)(2H+2)(Q^H-1)+T` and the Bertrand-prime consequence.
+- [ ] Confirm that the Bose--Chowla finite-field theorem is cited as an
+  external result rather than claimed as Lean-formalized.
+
 ## Relation to the preprint
 
 - [ ] Re-read Problems 14--16 in Nathanson's June 8, 2026 revision and state

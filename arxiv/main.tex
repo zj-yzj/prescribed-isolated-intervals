@@ -89,13 +89,14 @@ All other $h$-term sums carry a nonzero label. If the label family has no
 short relations, then these exceptional sums are far apart.
 
 The first version uses powers and has exponential diameter. The later
-sections replace the powers by finite moment labels, giving polynomial
-diameter for fixed $h$, and by shifted-Sidon labels when $h=2$, giving
-quadratic diameter. The Sidon section also includes a lower bound showing
-that quadratic diameter is the best possible order for this Sidon-label
-strategy. These quantitative refinements are not needed merely to answer the
-existence questions, but they make the construction less ad hoc and identify
-where the real optimization problem begins.
+sections replace the powers by finite moment labels, then by a
+Bose--Chowla modular $B_t$ construction, giving a much smaller polynomial
+diameter for fixed $h$. When $h=2$, shifted-Sidon labels give a quadratic
+diameter bound. The Sidon section also includes a lower bound showing that
+quadratic diameter is the best possible order for this Sidon-label strategy.
+These quantitative refinements are not needed merely to answer the existence
+questions, but they make the construction less ad hoc and identify where the
+real optimization problem begins.
 
 \section{A short separation lemma}
 
@@ -494,6 +495,121 @@ $S=\bigcup_i[c_i,c_i+n]$. A multiple $\tau$ of $h$ can be chosen within
 $h/2$ of the midpoint of $[c_1,c_q+n]$, giving the stated bound for $T$.
 \end{proof}
 
+\section{A Bose--Chowla diameter refinement}
+
+The finite moment labels are elementary and formalized, but their polynomial
+degree is not competitive. A classical construction of Bose and Chowla gives
+small modular $B_t$ sets, and these can be converted into integer labels with
+no short relations. We record the conversion explicitly because it is the
+part used by the present construction.
+
+Let $G$ be an abelian group. A set $B\subseteq G$ is a $B_t$ set if equality
+of two $t$-term sums from $B$, with repetitions allowed, forces equality of
+the two multisets of summands.
+
+\begin{lemma}[Modular $B_t$ labels]\label{lem:modular-bt-labels}
+Let $t\geq 1$, let $N\geq 1$, and let
+$\beta_0,\ldots,\beta_{m-1}\in\{0,\ldots,N-1\}$ have distinct residue
+classes forming a $B_t$ set in $\Z/N\Z$. Put
+\[
+ \gamma_r=(2t+1)N+\beta_r.
+\]
+If $z=(z_0,\ldots,z_{m-1})\in\Z^m$ is nonzero and
+$\lVert z\rVert_1\leq 2t$, then
+\[
+ \sum_{r=0}^{m-1}z_r\gamma_r\neq 0.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $z=z^+-z^-$, where $z_r^+=\max(z_r,0)$ and
+$z_r^-=\max(-z_r,0)$. Let
+\[
+ r_+=\sum_r z_r^+,
+ \qquad
+ r_-=\sum_r z_r^-.
+\]
+Then $r_++r_-\leq 2t$. Suppose, for a contradiction, that
+$\sum_rz_r\gamma_r=0$.
+
+If $r_+\neq r_-$, then the contribution of the common shift $(2t+1)N$ has
+absolute value at least $(2t+1)N$. The residue contribution has absolute
+value at most
+\[
+ \sum_r(z_r^++z_r^-)(N-1)<2tN,
+\]
+which is too small to cancel the shift contribution. Hence $r_+=r_-=r$.
+In particular, $r\leq t$.
+
+Reducing the equality modulo $N$ gives equality in $\Z/N\Z$ between two
+$r$-term sums of the residues $\beta_i$. Choose any one residue $\beta_0$
+and pad both sides by $t-r$ copies of it. The $B_t$ property implies that
+the two original $r$-term multisets are equal, so $z=0$, a contradiction.
+\end{proof}
+
+\begin{theorem}[Bose--Chowla diameter realization]\label{thm:bose-chowla}
+Let $h\geq 2$, $d\geq 2$, and let $S\subseteq\Z$ be a nonempty finite set
+with $m=|S|$. Put
+\[
+ H=h(h-1).
+\]
+For every prime power $Q\geq m$, there is an explicitly constructible set
+$A\subseteq\Z$ with $|A|=2m$ such that
+\[
+ hA=S\mathbin{\dot\cup}E,
+\]
+where distinct elements of $E$ are at distance at least $d$ from one another
+and every element of $E$ is at distance at least $d$ from $S$. Moreover, if
+$\tau\in h\Z$ minimizes
+\[
+ T=\max_{s\in S}|s-\tau|,
+\]
+then $A$ can be chosen with
+\[
+ \operatorname{diam}(A)
+ \leq h(2hT+d)(2H+2)(Q^H-1)+T.
+\]
+Consequently, for $m\geq 2$ one may take a prime $Q\leq 2m-1$, giving
+\[
+ \operatorname{diam}(A)
+ \leq h(2hT+d)(2H+2)\bigl((2m-1)^H-1\bigr)+T.
+\]
+\end{theorem}
+
+\begin{proof}
+By the Bose--Chowla theorem~\cite{BoseChowla}, there is a $B_H$ set of
+cardinality $Q$ in the cyclic group $\Z/(Q^H-1)\Z$. Choose any $m$ of its
+elements and represent them by integers
+$\beta_0,\ldots,\beta_{m-1}\in[0,Q^H-2]$. Lemma~\ref{lem:modular-bt-labels}
+with $t=H$ shows that
+\[
+ \gamma_r=(2H+1)(Q^H-1)+\beta_r
+\]
+has no nonzero integer relation of $\ell^1$ norm at most $2H$.
+
+Enumerate the centered target set $S-\tau$ as $t_0,\ldots,t_{m-1}$ and put
+\[
+ M=2hT+d,
+ \qquad
+ a_r=M\gamma_r.
+\]
+The labels $a_r$ satisfy the separation hypothesis
+\eqref{eq:abstract-separation}. Proposition~\ref{prop:labels} realizes the
+centered target set. Translating the resulting basis by $\tau/h$ restores
+$S$ and does not change the diameter.
+
+Finally,
+\[
+ \max_r\gamma_r
+ \leq (2H+1)(Q^H-1)+(Q^H-2)
+ < (2H+2)(Q^H-1),
+\]
+and every centered generator lies between $-\max_r a_r$ and
+$T+(h-1)\max_r a_r$. This gives the displayed diameter bound. The final
+estimate follows from Bertrand's postulate, choosing a prime
+$Q\leq 2m-1$ for $m\geq 2$.
+\end{proof}
+
 \begin{theorem}[Quadratic diameter for double sumsets]\label{thm:sidon}
 Let $d\geq 2$, and let $S\subseteq\Z$ be a nonempty finite set with $m=|S|$.
 There is an explicitly constructible set $A\subseteq\Z$ with $|A|=2m$ such
@@ -609,11 +725,14 @@ and the second follows from
 \[
  \operatorname{diam}(hA)=h\operatorname{diam}(A).
 \]
-Thus Theorem~\ref{thm:polynomial} supplies a polynomial diameter bound for
-fixed $h$, while Theorem~\ref{thm:sidon} gives a quadratic bound when $h=2$.
-Proposition~\ref{prop:sidon-barrier} shows that the quadratic order is
-unavoidable within the Sidon-label method. Optimizing either the cardinality
-or the degree for $h\geq 3$ remains open.
+Thus Theorem~\ref{thm:polynomial} supplies an elementary polynomial diameter
+bound for fixed $h$, while Theorem~\ref{thm:bose-chowla} lowers the exponent
+to $H=h(h-1)$ by using classical modular $B_H$ sets. Theorem~\ref{thm:sidon}
+gives a quadratic bound when $h=2$ with better constants and a direct
+integer formula. Proposition~\ref{prop:sidon-barrier} shows that the
+quadratic order is unavoidable within the Sidon-label method. Optimizing the
+cardinality, or proving lower bounds outside these label frameworks, remains
+open.
 \end{remark}
 
 \section{Relation with the single-interval construction}
@@ -658,6 +777,11 @@ separated-interval wrapper. The midpoint translation, radius, and scale are
 selected automatically from an enclosing interval.
 
 \begin{thebibliography}{9}
+
+\bibitem{BoseChowla}
+R. C. Bose and S. Chowla,
+\emph{Theorems in the additive theory of numbers},
+Commentarii Mathematici Helvetici \textbf{37} (1962/63), 141--147.
 
 \bibitem{NathansonVII}
 Melvyn B. Nathanson,

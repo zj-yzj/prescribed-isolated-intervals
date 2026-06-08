@@ -136,6 +136,10 @@ separation, set-level isolation theorem, translation invariance, diameter
 upper and lower bounds, tightened Bertrand-prime estimate, exact cardinality,
 and automatically centered interval-family wrapper are also kernel-checked
 in Lean.
+The Bose--Chowla diameter refinement in the paper uses the classical
+finite-field theorem of Bose and Chowla as an external mathematical input; the
+label-packaging argument follows the same separated-label principle, but the
+finite-field construction itself is not formalized here.
 ## Paper And Documentation
 
 - [`paper/prescribed-isolated-intervals.tex`](paper/prescribed-isolated-intervals.tex)
