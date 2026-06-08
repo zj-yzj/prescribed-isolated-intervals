@@ -44,6 +44,11 @@ difference-counting argument shows that this quadratic order is unavoidable
 within the Sidon-label method. The main separation, interval-family,
 cardinality, translation, diameter, and shifted-Sidon arguments have been
 checked in Lean 4 with Mathlib.
+
+We also give a second construction for the single-interval double-sumset
+problem. It reduces the number of elements from linear in the interval length
+to $O(\sqrt n)$. This quantitative refinement is independent of the
+separated-label construction and uses a two-colour bounded Frobenius packet.
 \end{abstract}
 
 \section{Introduction}
@@ -97,6 +102,14 @@ quadratic diameter is the best possible order for this Sidon-label strategy.
 These quantitative refinements are not needed merely to answer the existence
 questions, but they make the construction less ad hoc and identify where the
 real optimization problem begins.
+
+There is another, complementary optimization in the single-interval case. If
+one only asks that the longest interval in a double sumset have length $n$,
+and does not forbid shorter proper intervals elsewhere, then the interval need
+not be generated point by point. A two-colour packet built from the two
+arithmetic progressions with steps $a$ and $a+1$ produces one long interval in
+the cross-sum while the two same-colour sumsets have no adjacent elements. This
+gives a sparse single-interval construction with $O(\sqrt n)$ elements.
 
 \section{A short separation lemma}
 
@@ -347,6 +360,152 @@ the construction in Theorem~\ref{thm:main} satisfies
  \leq h(2hT+d)\bigl(2h(h-1)\bigr)^{q(n+1)-1}+T.
 \]
 The bound is intentionally simple rather than optimized.
+\end{remark}
+
+\section{A sparse construction for one interval}
+
+The construction above proves the stronger no-extra-interval assertion with
+$2q(n+1)$ elements. For a single interval in a double sumset, one can do much
+better in the interval length if shorter proper intervals elsewhere are
+allowed.
+
+\begin{lemma}[A two-colour Frobenius packet]\label{lem:frobenius-packet}
+Let $a\geq 2$, put $b=a+1$, and let $R\geq b-1$, $S\geq a-1$. Define
+\[
+ X=\{0,a,2a,\ldots,Ra\},
+ \qquad
+ Y=\{0,b,2b,\ldots,Sb\},
+\]
+and put
+\[
+ g=(a-1)(b-1)=a(a-1),
+ \qquad
+ L=aR+bS-2g.
+\]
+Then $X+Y$ contains the interval
+\[
+ [g,g+L].
+\]
+If $L\geq g$, this is the only interval of length $L$ in $X+Y$. Moreover
+$X+X$ and $Y+Y$ contain no nontrivial intervals.
+\end{lemma}
+
+\begin{proof}
+The last assertion is immediate: $X+X$ is contained in one residue class
+modulo $a$, and $Y+Y$ is contained in one residue class modulo $b$, with
+$a,b\geq 2$.
+
+We use the standard bounded form of the two-generator Frobenius argument: if
+$\gcd(a,b)=1$, $R\geq b-1$, and $S\geq a-1$, then
+\[
+ \{ia+jb:0\leq i\leq R,\ 0\leq j\leq S\}
+\]
+contains every integer in the interval
+\[
+ [(a-1)(b-1),\,aR+bS-(a-1)(b-1)].
+\]
+One way to see this is to fix a residue class modulo $a$. As $j$ runs through
+the admissible values in that residue class, the corresponding intervals of
+possible quotients overlap because $R\geq b-1$; the hypothesis $S\geq a-1$
+supplies all residue classes. The same argument applied after the reflection
+$N\mapsto aR+bS-N$ gives the upper bound. Applying this with $b=a+1$ gives the
+interval $[g,g+L]$.
+
+The integer $g-1$ is the Frobenius number for $a$ and $b$, so it is not in
+$X+Y$; by symmetry, $aR+bS-g+1$ is not in $X+Y$ either. All points of $X+Y$
+outside $[g,g+L]$ lie in the two side ranges
+\[
+ [0,g-1],
+ \qquad
+ [g+L+1,g+L+g].
+\]
+Each side range has diameter $g-1<L$ when $L\geq g$. Therefore no side range
+contains an interval of length $L$, and no interval of length $L$ can extend
+the central interval across either missing endpoint.
+\end{proof}
+
+\begin{theorem}[Sparse single-interval realization]\label{thm:sparse-single}
+Let $n\geq 16$, let $c\in\Z$, and put
+\[
+ a=\lfloor\sqrt n\rfloor-1,
+ \qquad
+ g=a(a-1).
+\]
+Then there is a finite set $A\subseteq\Z$ such that $[c,c+n]$ is the unique
+interval of length $n$ in $2A$, and
+\[
+ |A|\leq 5\sqrt n+1.
+\]
+\end{theorem}
+
+\begin{proof}
+Put
+\[
+ n_0=n-(2a-1).
+\]
+Since $a=\lfloor\sqrt n\rfloor-1$ and $n\geq 16$, we have $a\geq 3$ and
+$n_0\geq a^2-1$. Choose $v\in\{0,\ldots,a-1\}$ such that
+\[
+ v\equiv n_0\pmod a,
+\]
+and define
+\[
+ u=\frac{n_0-(a+1)v}{a}.
+\]
+The inequality $n_0\geq a^2-1$ gives $u\geq 0$. Set
+\[
+ R=a+u,\qquad S=a-1+v,\qquad b=a+1.
+\]
+Then $R\geq b-1$, $S\geq a-1$, and
+\[
+ aR+bS-2a(a-1)
+ =2a-1+au+(a+1)v
+ =n.
+\]
+
+Let $X$ and $Y$ be the two arithmetic progressions from
+Lemma~\ref{lem:frobenius-packet}. Choose an integer $P$ so large that the
+three families of sums displayed below are pairwise separated by at least one
+missing integer; for example any sufficiently large positive $P$ works. Put
+\[
+ A=(P+X)\cup(c-g-P+Y).
+\]
+The cross-sums are
+\[
+ (P+X)+(c-g-P+Y)=c-g+X+Y.
+\]
+By Lemma~\ref{lem:frobenius-packet}, this cross-sum packet has a unique
+interval of length $n$, namely $[c,c+n]$. The same-colour sums
+\[
+ (P+X)+(P+X)
+ \quad\text{and}\quad
+ (c-g-P+Y)+(c-g-P+Y)
+\]
+contain no nontrivial intervals, since they are translates of $X+X$ and
+$Y+Y$. The choice of $P$ keeps these same-colour sums away from the cross-sum
+packet. Hence $[c,c+n]$ is the unique interval of length $n$ in $2A$.
+
+Finally,
+\[
+ |A|\leq (R+1)+(S+1).
+\]
+Because $v<a$ and $a\leq\sqrt n$, we have $S+1=a+v\leq 2\sqrt n$. Also
+$a\geq \sqrt n/2$ for $n\geq 16$, and hence
+\[
+ R+1=a+u+1\leq a+\frac{n_0}{a}+1\leq 3\sqrt n+1.
+\]
+Combining these two estimates gives the claimed bound.
+\end{proof}
+
+\begin{remark}
+The single-interval construction deliberately shares one colour class and
+therefore avoids mixed copies of the long cross-sum packet. A naive attempt to
+translate the second colour class for several prescribed starts introduces
+many same-colour sums of the form $Y_i+Y_j$; for arbitrary separated starts,
+the translates indexed by $c_i+c_j$ can interlace. Thus this sparse argument
+does not replace Theorem~\ref{thm:main} for the full multi-interval problem.
+It instead shows that the linear cardinality in the stronger theorem is a
+price paid for complete isolation and arbitrary multi-interval placement.
 \end{remark}
 
 \section{A polynomial diameter refinement}
@@ -752,6 +911,12 @@ points for fixed $h$, after centering the target set. For $h=2$, shifted
 Sidon labels give a quadratic diameter bound, and
 Proposition~\ref{prop:sidon-barrier} shows that this order is forced by the
 Sidon-label mechanism itself.
+
+The sparse construction in Theorem~\ref{thm:sparse-single} points in a
+different direction: it optimizes cardinality rather than isolation, and only
+for one interval. It shows that the $2n+2$ size in the isolated
+single-interval specialization is not a lower bound for the starts-only
+single-interval problem.
 
 \section{Reproducibility}
 

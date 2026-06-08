@@ -218,8 +218,10 @@ The finite moment-label refinement now has Lean declarations through its
 position-independent closed interval-family theorem. Independent mathematical
 review is still appropriate before submission. The Bose--Chowla diameter
 refinement in the paper cites the classical finite-field construction as an
-external theorem and is not separately formalized here. For the shifted Sidon
-refinement, Lean checks the explicit pair-sum argument over `ZMod p`,
+external theorem and is not separately formalized here. The sparse
+single-interval Frobenius-packet construction is also an ordinary paper proof
+at this stage, not a Lean theorem. For the shifted Sidon refinement, Lean
+checks the explicit pair-sum argument over `ZMod p`,
 order-four short-relation freedom, set-level isolation, translation
 invariance, quadratic upper and lower bounds, tightened Bertrand-prime
 selection, exact cardinality after translation, and the automatically

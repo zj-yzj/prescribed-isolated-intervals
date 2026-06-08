@@ -25,6 +25,12 @@ code creates machine-checkable JSON certificates, but the proof is elementary
 and is recorded in
 [`paper/prescribed-isolated-intervals.tex`](paper/prescribed-isolated-intervals.tex).
 
+The paper also includes a separate sparse construction for one interval in a
+double sumset: for `n >= 16`, the starts-only single-interval problem can be
+realized with `O(sqrt(n))` elements. This sparse construction optimizes
+cardinality rather than complete isolation, so it does not replace the
+multi-interval theorem above.
+
 ## Setup
 
 ```powershell

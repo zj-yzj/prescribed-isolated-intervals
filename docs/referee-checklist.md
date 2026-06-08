@@ -40,6 +40,19 @@ Use this as an adversarial review pass before circulating the draft.
 - [ ] Verify the elementary comparison bounds
   `m <= binomial(k + h - 1, h)` and `diam(A) >= diam(S) / h`.
 
+## Sparse single-interval construction
+
+- [ ] Check the bounded Frobenius packet:
+  `X = {0, a, ..., Ra}`, `Y = {0, a + 1, ..., S(a + 1)}` contains the central
+  interval `[g, g + L]` with `g = a(a - 1)`.
+- [ ] Verify that `g - 1` and `g + L + 1` are missing, so the central interval
+  is maximal.
+- [ ] Check that the two side ranges have diameter `< L` when `L >= g`.
+- [ ] Verify the choice `a = floor(sqrt(n)) - 1` and the representation
+  `n = 2a - 1 + au + (a + 1)v` for `n >= 16`.
+- [ ] Confirm that the sparse theorem is only single-interval and starts-only;
+  it is not used as a proof of the arbitrary multi-interval Problems 14--16.
+
 ## Quadratic double-sumset refinement
 
 - [ ] Verify the shifted-Sidon formula `b_r = 2p^2 + 2pr + (r^2 mod p)`.
@@ -84,7 +97,7 @@ Use this as an adversarial review pass before circulating the draft.
 - [ ] Check that bounded computational scans are described as evidence, not
   as proofs of unrestricted claims.
 - [ ] Confirm that every theorem claimed in the paper is either proved in the
-  paper or named accurately in `research/formalization-status.md`.
+  paper or named accurately in `docs/formalization-status.md`.
 - [ ] Keep the Lean boundary explicit: the power, moment, and shifted-Sidon
   closed interval constructions are formalized; midpoint centering and the
   shifted-Sidon quadratic upper and lower bounds are also formalized; exact
