@@ -28,6 +28,13 @@ The functions `scan_nonnegative_window(...)` and `scan_signed_window(...)`
 only report extrema inside the requested finite window. They are discovery
 tools and must not be cited as global proofs.
 
+The function `scan_strong_single_interval_minima(...)` is another bounded
+discovery tool. It normalizes candidates by translating them so that
+`min(A) = 0`, then searches for sets whose double sumset has exactly one
+nontrivial maximal interval of a prescribed length. This is useful for testing
+whether a proposed cardinality lower bound for the strong single-interval
+problem is plausible before trying to prove it.
+
 ## Reproduction
 
 ```powershell
@@ -54,6 +61,7 @@ python -m interval_bases construct `
   --length 3 `
   --distance 4 `
   --output certificates/sidon-large-translation.json
+python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-element 18
 ```
 
 The certificate records the label scheme, constructed set, all maximal nontrivial runs in
@@ -68,6 +76,12 @@ The `sidon` scheme is specialized to `h = 2`. It uses shifted Sidon labels
 whose largest value is quadratic in the number of target points. This gives a
 sharper quadratic diameter bound for double sumsets. The Lean development
 also checks that the explicit basis has quadratic diameter from below.
+
+The `strong-single-scan` command reports, for each `1 <= n <= max_length`, the
+first cardinality found in the requested finite window for which `2A` has
+exactly one nontrivial maximal interval of length `n`. It is deliberately
+separate from the OEIS checks: it studies the no-extra-proper-interval
+condition used in the paper, not only the prefix invariant `n_2(k)`.
 
 ## Lean Verification
 

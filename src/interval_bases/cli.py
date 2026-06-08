@@ -17,6 +17,7 @@ from .search import (
     enumerate_exact_prefix_extremum,
     scan_nonnegative_window,
     scan_signed_window,
+    scan_strong_single_interval_minima,
 )
 
 
@@ -87,6 +88,14 @@ def _oeis_check(args: argparse.Namespace) -> int:
     return 0 if all(check["ok"] for check in checks) else 1
 
 
+def _strong_single_scan(args: argparse.Namespace) -> int:
+    results = scan_strong_single_interval_minima(
+        args.max_length, args.max_k, args.max_element
+    )
+    _print_json([result.to_dict() for result in results])
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -114,6 +123,15 @@ def build_parser() -> argparse.ArgumentParser:
     oeis = subparsers.add_parser("oeis-check", help="compare against OEIS values")
     oeis.add_argument("--max-stamps", type=int, default=3)
     oeis.set_defaults(handler=_oeis_check)
+
+    strong = subparsers.add_parser(
+        "strong-single-scan",
+        help="bounded search for one nontrivial interval in 2A",
+    )
+    strong.add_argument("--max-length", required=True, type=int)
+    strong.add_argument("--max-k", required=True, type=int)
+    strong.add_argument("--max-element", required=True, type=int)
+    strong.set_defaults(handler=_strong_single_scan)
     return parser
 
 

@@ -968,7 +968,10 @@ The accompanying Python package constructs $A$, computes $hA$, checks all
 maximal consecutive runs, records the minimum exceptional spacing, and emits
 JSON certificates. It also includes exact small-parameter computations
 cross-checked against \href{https://oeis.org/A001208}{OEIS A001208} and
-\href{https://oeis.org/A001209}{OEIS A001209}. The arithmetic separation,
+\href{https://oeis.org/A001209}{OEIS A001209}, together with bounded scans for
+sets whose double sumset has exactly one nontrivial interval. These bounded
+scans are used only as discovery evidence for cardinality questions. The
+arithmetic separation,
 bounded-offset, matched-count, tagged-representation, exceptional-count
 uniqueness, generic set-level isolation, interval-enumeration, maximal-run,
 and exact-cardinality arguments have also been checked in Lean 4 with Mathlib.

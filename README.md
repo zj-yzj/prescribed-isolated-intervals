@@ -82,6 +82,7 @@ Run exact classical checks and bounded exploratory scans:
 ```powershell
 python -m interval_bases oeis-check --max-stamps 3
 python -m interval_bases scan --h 4 --k 5 --max-element 24 --min-element -8
+python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-element 18
 ```
 
 ## What The Commands Mean
@@ -96,6 +97,9 @@ python -m interval_bases scan --h 4 --k 5 --max-element 24 --min-element -8
   with [OEIS A001208][a001208] and [OEIS A001209][a001209].
 - `scan` is exploratory. Nonnegative results are bounded-window results unless
   labeled `exact_prefix`; signed results are always bounded-window results.
+- `strong-single-scan` searches a finite window for sets whose double sumset
+  has exactly one nontrivial interval, useful for testing cardinality
+  heuristics around the sparse single-interval theorem.
 
 Lean is intentionally optional. The key separation lemma is short enough to
 audit by hand, and a Mathlib-backed Lean 4 formalization is now included.

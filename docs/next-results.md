@@ -18,6 +18,8 @@ Completed:
 5. The paper now includes a sparse single-interval double-sumset construction
    with `O(sqrt(n))` elements, together with the matching counting lower bound
    `n + 1 <= binomial(|A| + 1, 2)`.
+6. The code now includes a bounded `strong-single-scan` command for testing
+   the stronger condition that `2A` has exactly one nontrivial interval.
 
 Remaining numerical polish: retaining the target count directly in
 `b_r = 2p^2 + 2pr + (r^2 mod p)` gives a slightly smaller prime-level upper
@@ -46,6 +48,9 @@ to understand cardinality:
    multi-interval analogue under additional spacing hypotheses;
 3. if such an analogue fails, isolate a clean obstruction coming from the
    same-colour sums indexed by `c_i + c_j`.
+4. compare the bounded strong-single-interval minima against classical
+   postage-stamp extremal bases to see whether a sharper theorem is already
+   hidden in known `n_2(k)` data.
 
 This would directly address the gap between the strong isolated construction
 with `2q(n + 1)` elements and the order-optimal `O(sqrt(n))` single-interval

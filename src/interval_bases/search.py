@@ -7,7 +7,7 @@ from itertools import combinations
 from math import comb
 from typing import Iterable
 
-from .core import ell, ell_sharp
+from .core import Interval, consecutive_intervals, ell, ell_sharp, hfold_sumset
 
 
 # OEIS A001208: best h-range with three positive denominations and h stamps.
@@ -61,6 +61,24 @@ class WindowScan:
             "sets_checked": self.sets_checked,
             "best_prefix": self.best_prefix.to_dict(),
             "best_interval": self.best_interval.to_dict(),
+        }
+
+
+@dataclass(frozen=True)
+class StrongSingleIntervalWitness:
+    interval_length: int
+    k: int | None
+    witness: tuple[int, ...] | None
+    interval: Interval | None
+    sets_checked: int
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "interval_length": self.interval_length,
+            "k": self.k,
+            "witness": list(self.witness) if self.witness is not None else None,
+            "interval": self.interval.to_dict() if self.interval is not None else None,
+            "sets_checked": self.sets_checked,
         }
 
 
@@ -159,6 +177,72 @@ def scan_signed_window(
     )
 
 
+def _unique_nontrivial_interval(
+    basis: Iterable[int], interval_length: int
+) -> Interval | None:
+    intervals = consecutive_intervals(hfold_sumset(basis, 2), min_length=1)
+    if len(intervals) == 1 and intervals[0].length == interval_length:
+        return intervals[0]
+    return None
+
+
+def scan_strong_single_interval_minima(
+    max_interval_length: int, max_k: int, max_element: int
+) -> list[StrongSingleIntervalWitness]:
+    """Bounded search for one nontrivial interval in a double sumset.
+
+    The scan normalizes by translating the candidate basis so that its
+    smallest element is zero. This preserves all interval lengths in ``2A``.
+    Results are window-limited and are intended for discovery, not as global
+    optimality proofs.
+    """
+
+    if max_interval_length < 1:
+        raise ValueError("max_interval_length must be positive")
+    if max_k < 1:
+        raise ValueError("max_k must be positive")
+    if max_element < 0:
+        raise ValueError("max_element must be nonnegative")
+
+    results: list[StrongSingleIntervalWitness] = []
+    values = tuple(range(1, max_element + 1))
+    for n in range(1, max_interval_length + 1):
+        checked = 0
+        found_basis: tuple[int, ...] | None = None
+        found_interval: Interval | None = None
+        for k in range(1, max_k + 1):
+            for tail in combinations(values, k - 1):
+                basis = (0, *tail)
+                checked += 1
+                interval = _unique_nontrivial_interval(basis, n)
+                if interval is not None:
+                    found_basis = basis
+                    found_interval = interval
+                    break
+            if found_basis is not None:
+                results.append(
+                    StrongSingleIntervalWitness(
+                        interval_length=n,
+                        k=k,
+                        witness=found_basis,
+                        interval=found_interval,
+                        sets_checked=checked,
+                    )
+                )
+                break
+        else:
+            results.append(
+                StrongSingleIntervalWitness(
+                    interval_length=n,
+                    k=None,
+                    witness=None,
+                    interval=None,
+                    sets_checked=checked,
+                )
+            )
+    return results
+
+
 def check_oeis_values(max_stamps: int = 3) -> list[dict[str, object]]:
     """Return exact computations alongside selected OEIS postage-stamp values."""
 
@@ -185,4 +269,3 @@ def check_oeis_values(max_stamps: int = 3) -> list[dict[str, object]]:
                 }
             )
     return checks
-
