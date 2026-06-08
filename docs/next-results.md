@@ -15,6 +15,9 @@ Completed:
    `p < 2m`, giving `T + 8 M (2m - 1)^2` instead of `T + 32 M m^2`.
 4. The explicit shifted-Sidon basis has a formalized lower bound
    `2 M m (m - 1)`, showing that its quadratic order is sharp.
+5. The paper now includes a sparse single-interval double-sumset construction
+   with `O(sqrt(n))` elements, together with the matching counting lower bound
+   `n + 1 <= binomial(|A| + 1, 2)`.
 
 Remaining numerical polish: retaining the target count directly in
 `b_r = 2p^2 + 2pr + (r^2 mod p)` gives a slightly smaller prime-level upper
@@ -30,23 +33,23 @@ L = 2 h (h - 1).
 
 The separated-label principle needs to rule out nonzero integer relations of
 `l1` norm at most `L`. The moment-label construction does this with a
-polynomial whose degree is intentionally simple but large.
+polynomial whose degree is intentionally simple but large. The Bose--Chowla
+section now supplies the sharper fixed-`h` polynomial exponent through modular
+`B_H` sets.
 
-A stronger route is to use explicit finite `B_s` sets, with `s` chosen as a
-function of `L`, together with a translation into a short positive interval.
-The intended mechanism is:
+The best next mathematical direction is no longer another label family. It is
+to understand cardinality:
 
-1. the short interval forces the two sides of a short relation to use the
-   same number of terms;
-2. a suitable `B_s` property then forces equality of the two multisets;
-3. scaling gives the separated-label hypothesis already consumed by the
-   generic Lean theorem.
+1. prove a lower bound for arbitrary multi-interval isolated patterns that is
+   stronger than the trivial multiset count;
+2. determine whether the sparse single-interval Frobenius packet has a
+   multi-interval analogue under additional spacing hypotheses;
+3. if such an analogue fails, isolate a clean obstruction coming from the
+   same-colour sums indexed by `c_i + c_j`.
 
-This should improve the fixed-`h` polynomial diameter exponent if the
-unequal-length relation step is closed cleanly. The novelty would not be the
-existence of `B_s` sets. It would be their use as a quantitatively sharper
-label engine for prescribed isolated intervals, with an explicit theorem and
-comparison against the moment construction.
+This would directly address the gap between the strong isolated construction
+with `2q(n + 1)` elements and the order-optimal `O(sqrt(n))` single-interval
+starts-only construction.
 
 Relevant primary sources:
 
@@ -63,9 +66,10 @@ diam(A) >= diam(S) / h.
 ```
 
 It now also proves that every Sidon label set has diameter at least
-`binomial(m, 2)`, and Lean checks the stronger lower bound
-`2 M m (m - 1)` for the explicit shifted-Sidon basis. Remaining useful
-targets are:
+`binomial(m, 2)`, Lean checks the stronger lower bound
+`2 M m (m - 1)` for the explicit shifted-Sidon basis, and the sparse
+single-interval construction is optimal in order by the elementary lower bound
+above. Remaining useful targets are:
 
 1. a cardinality lower bound that exploits isolation, not only the number of
    available multisets;

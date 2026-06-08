@@ -8,4 +8,4 @@ Suggested metadata:
 - Title: `Prescribed Isolated Intervals in Higher Fold Sumsets`
 - Author: `Zijie Yu`
 - Category: `math.NT`
-- Comments: `12 pages; includes computational and Lean 4 verification notes`
+- Comments: `13 pages; includes computational and Lean 4 verification notes`

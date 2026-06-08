@@ -50,6 +50,9 @@ Use this as an adversarial review pass before circulating the draft.
 - [ ] Check that the two side ranges have diameter `< L` when `L >= g`.
 - [ ] Verify the choice `a = floor(sqrt(n)) - 1` and the representation
   `n = 2a - 1 + au + (a + 1)v` for `n >= 16`.
+- [ ] Check the optimal-order lower bound:
+  if an interval of length `n` lies in `2A`, then
+  `n + 1 <= binomial(|A| + 1, 2)`.
 - [ ] Confirm that the sparse theorem is only single-interval and starts-only;
   it is not used as a proof of the arbitrary multi-interval Problems 14--16.
 
