@@ -47,9 +47,11 @@ checked in Lean 4 with Mathlib.
 
 We also give a second construction for the single-interval double-sumset
 problem. It reduces the number of elements from linear in the interval length
-to $O(\sqrt n)$, and this order is best possible. This quantitative refinement
-is independent of the separated-label construction and uses a two-colour
-bounded Frobenius packet.
+to $O(\sqrt n)$, and this order is best possible. A multi-interval variant
+with $O(q\sqrt n)$ elements is obtained when the pair-sum set of the prescribed
+starts is itself sufficiently separated. These quantitative refinements are
+independent of the separated-label construction and use a two-colour bounded
+Frobenius packet.
 \end{abstract}
 
 \section{Introduction}
@@ -112,7 +114,10 @@ arithmetic progressions with steps $a$ and $a+1$ produces one long interval in
 the cross-sum while the two same-colour sumsets have no adjacent elements. This
 gives a sparse single-interval construction with $O(\sqrt n)$ elements. A
 matching counting lower bound shows that this is the optimal order for any
-construction whose double sumset contains an interval of length $n$.
+construction whose double sumset contains an interval of length $n$. The same
+packet can be reused for several prescribed starts if the pair sums
+$c_i+c_j$ are also separated; this yields an $O(q\sqrt n)$ sparse
+multi-interval theorem under an additive separation hypothesis.
 
 \section{A short separation lemma}
 
@@ -480,6 +485,7 @@ Then $R\geq b-1$, $S\geq a-1$, and
  =2a-1+au+(a+1)v
  =n.
 \]
+Also $g<a^2\leq n$.
 
 Let $X$ and $Y$ be the two arithmetic progressions from
 Lemma~\ref{lem:frobenius-packet}. Choose an integer $P$ so large that the
@@ -540,15 +546,104 @@ which gives the displayed lower bound after solving the quadratic inequality
 for $k$.
 \end{proof}
 
+\begin{theorem}[Sparse pair-separated multi-interval realization]
+\label{thm:sparse-pair-separated}
+Let $n\geq 16$, let $q\geq 1$, and define
+\[
+ a=\lfloor\sqrt n\rfloor-1,\qquad b=a+1,\qquad g=a(a-1).
+\]
+Put
+\[
+ n_0=n-(2a-1),
+\]
+choose $v\in\{0,\ldots,a-1\}$ with $v\equiv n_0\pmod a$, and set
+\[
+ u=\frac{n_0-(a+1)v}{a},\qquad R=a+u,\qquad S=a-1+v.
+\]
+Let
+\[
+ C=\{c_1<\cdots<c_q\}\subseteq\Z
+\]
+and suppose that distinct elements of
+\[
+ C+C=\{c_i+c_j:1\leq i\leq j\leq q\}
+\]
+are separated by at least
+\[
+ \Delta=\max(n+2g+2,\ 2Sb+2).
+\]
+Then there is a finite set $A\subseteq\Z$ such that the intervals
+$[x,x+n]\subseteq 2A$ are exactly the intervals $[c_i,c_i+n]$, and
+\[
+ |A|\leq (2q+3)\sqrt n+1.
+\]
+\end{theorem}
+
+\begin{proof}
+As in the proof of Theorem~\ref{thm:sparse-single}, the chosen parameters
+satisfy
+\[
+ R\geq b-1,\qquad S\geq a-1,\qquad aR+bS-2g=n,\qquad n\geq g.
+\]
+Let
+\[
+ X=\{0,a,2a,\ldots,Ra\},\qquad
+ Y=\{0,b,2b,\ldots,Sb\}.
+\]
+Choose $P$ so large that the families
+\[
+ 2P+X+X,\qquad c_i-g+X+Y,\qquad
+ c_i+c_j-2g-2P+Y+Y
+\]
+are separated from families of the other two displayed types by at least one
+missing integer. This is possible because $P$ moves the first type to the
+right and the third type to the left, while the cross-sum packets stay fixed.
+Put
+\[
+ A=(P+X)\cup\bigcup_{i=1}^q(c_i-g-P+Y).
+\]
+
+The cross-sums are
+\[
+ (P+X)+(c_i-g-P+Y)=c_i-g+X+Y.
+\]
+By Lemma~\ref{lem:frobenius-packet}, the $i$th cross-sum packet contains the
+unique interval of length $n$
+\[
+ [c_i,c_i+n].
+\]
+It is contained in $[c_i-g,c_i+n+g]$. Since the pair-sum separation hypothesis
+applied to $2c_i$ and $c_i+c_{i+1}$ implies
+$c_{i+1}-c_i\geq\Delta\geq n+2g+2$, the cross-sum packets are separated from
+one another by at least one missing integer.
+
+The same-colour $X$-sum $2P+X+X$ has no nontrivial interval, since $X+X$ lies
+in one residue class modulo $a$. Likewise each translate of $Y+Y$ lies in one
+residue class modulo $b$ and hence has no nontrivial interval. All translates
+of $Y+Y$ are contained in intervals of the form
+\[
+ c_i+c_j-2g-2P+[0,2Sb].
+\]
+The hypothesis that distinct elements of $C+C$ are separated by at least
+$2Sb+2$ keeps these $Y+Y$ packets separated from one another by at least one
+missing integer. Therefore no interval of length $n$ can arise from the
+same-colour sums or by joining two different packets. The only intervals
+$[x,x+n]\subseteq 2A$ are the displayed intervals $[c_i,c_i+n]$.
+
+Finally,
+\[
+ |A|\leq (R+1)+q(S+1)\leq 3\sqrt n+1+2q\sqrt n,
+\]
+by the estimates already proved in Theorem~\ref{thm:sparse-single}.
+\end{proof}
+
 \begin{remark}
-The single-interval construction deliberately shares one colour class and
-therefore avoids mixed copies of the long cross-sum packet. A naive attempt to
-translate the second colour class for several prescribed starts introduces
-many same-colour sums of the form $Y_i+Y_j$; for arbitrary separated starts,
-the translates indexed by $c_i+c_j$ can interlace. Thus this sparse argument
-does not replace Theorem~\ref{thm:main} for the full multi-interval problem.
-It instead shows that the linear cardinality in the stronger theorem is a
-price paid for complete isolation and arbitrary multi-interval placement.
+The pair-sum separation hypothesis in Theorem~\ref{thm:sparse-pair-separated}
+is exactly what prevents the same-colour sums $Y_i+Y_j$ from interlacing. Thus
+the sparse argument does not replace Theorem~\ref{thm:main} for arbitrary
+multi-interval placement. It instead shows that the linear cardinality in the
+stronger theorem is a price paid for complete isolation and unrestricted
+placement of the starts.
 \end{remark}
 
 \section{A polynomial diameter refinement}
@@ -956,11 +1051,14 @@ Proposition~\ref{prop:sidon-barrier} shows that this order is forced by the
 Sidon-label mechanism itself.
 
 The sparse construction in Theorem~\ref{thm:sparse-single} points in a
-different direction: it optimizes cardinality rather than isolation, and only
-for one interval. It shows that the $2n+2$ size in the isolated
-single-interval specialization is not a lower bound for the starts-only
-single-interval problem. Proposition~\ref{prop:sparse-lower} shows that the
-resulting $O(\sqrt n)$ cardinality is optimal up to the absolute constant.
+different direction: it optimizes cardinality rather than isolation. It shows
+that the $2n+2$ size in the isolated single-interval specialization is not a
+lower bound for the starts-only single-interval problem.
+Proposition~\ref{prop:sparse-lower} shows that the resulting $O(\sqrt n)$
+cardinality is optimal up to the absolute constant.
+Theorem~\ref{thm:sparse-pair-separated} extends the same packet to several
+starts when the pair-sum set $C+C$ is separated, while
+Theorem~\ref{thm:main} remains the arbitrary-placement result.
 
 \section{Reproducibility}
 

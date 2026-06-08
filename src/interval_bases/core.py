@@ -138,6 +138,17 @@ def ell_sharp(values: Iterable[int], h: int) -> int:
     return max((interval.length for interval in intervals), default=-1)
 
 
+def interval_starts_of_length(values: Iterable[int], h: int, n: int) -> tuple[int, ...]:
+    """Return all starts c such that [c, c+n] is contained in hA."""
+
+    if n < 1:
+        raise ValueError("n must be positive")
+    starts: list[int] = []
+    for interval in consecutive_intervals(hfold_sumset(values, h), min_length=n):
+        starts.extend(range(interval.start, interval.end - n + 1))
+    return tuple(starts)
+
+
 def verify_pattern(
     values: Iterable[int], h: int, starts: Sequence[int], n: int
 ) -> PatternVerification:

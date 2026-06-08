@@ -220,9 +220,10 @@ review is still appropriate before submission. The Bose--Chowla diameter
 refinement in the paper cites the classical finite-field construction as an
 external theorem and is not separately formalized here. The sparse
 single-interval Frobenius-packet construction and its optimal-order counting
-lower bound are also ordinary paper proofs at this stage, not Lean theorems.
-For the shifted Sidon refinement, Lean checks the explicit pair-sum argument
-over `ZMod p`,
+lower bound, as well as the pair-sum-separated sparse multi-interval theorem,
+are also ordinary paper proofs at this stage, not Lean theorems. For the
+shifted Sidon refinement, Lean checks the explicit pair-sum argument over
+`ZMod p`,
 order-four short-relation freedom, set-level isolation, translation
 invariance, quadratic upper and lower bounds, tightened Bertrand-prime
 selection, exact cardinality after translation, and the automatically

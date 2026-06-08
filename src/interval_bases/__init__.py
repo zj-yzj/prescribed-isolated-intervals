@@ -14,6 +14,7 @@ from .core import (
     ell,
     ell_sharp,
     hfold_sumset,
+    interval_starts_of_length,
     verify_pattern,
 )
 
@@ -29,6 +30,7 @@ __all__ = [
     "ell",
     "ell_sharp",
     "hfold_sumset",
+    "interval_starts_of_length",
     "save_certificate",
     "verify_pattern",
 ]

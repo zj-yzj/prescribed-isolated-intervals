@@ -53,6 +53,10 @@ Use this as an adversarial review pass before circulating the draft.
 - [ ] Check the optimal-order lower bound:
   if an interval of length `n` lies in `2A`, then
   `n + 1 <= binomial(|A| + 1, 2)`.
+- [ ] Check the pair-separated multi-interval theorem: the separation of
+  distinct elements of `C + C` must keep all `Y_i + Y_j` packets from
+  interlacing, and it must also imply the required separation of the cross-sum
+  packets.
 - [ ] Confirm that the sparse theorem is only single-interval and starts-only;
   it is not used as a proof of the arbitrary multi-interval Problems 14--16.
 

@@ -20,6 +20,9 @@ Completed:
    `n + 1 <= binomial(|A| + 1, 2)`.
 6. The code now includes a bounded `strong-single-scan` command for testing
    the stronger condition that `2A` has exactly one nontrivial interval.
+7. A sparse multi-interval theorem now works under a pair-sum separation
+   hypothesis on `C + C`, giving `O(q sqrt(n))` elements for the starts-only
+   double-sumset problem in that regime.
 
 Remaining numerical polish: retaining the target count directly in
 `b_r = 2p^2 + 2pr + (r^2 mod p)` gives a slightly smaller prime-level upper
@@ -44,9 +47,10 @@ to understand cardinality:
 
 1. prove a lower bound for arbitrary multi-interval isolated patterns that is
    stronger than the trivial multiset count;
-2. determine whether the sparse single-interval Frobenius packet has a
-   multi-interval analogue under additional spacing hypotheses;
-3. if such an analogue fails, isolate a clean obstruction coming from the
+2. weaken the pair-sum separation hypothesis in the sparse multi-interval
+   theorem, or prove that some additive separation is necessary for this
+   packet method;
+3. isolate a clean obstruction for arbitrary starts coming from the
    same-colour sums indexed by `c_i + c_j`.
 4. compare the bounded strong-single-interval minima against classical
    postage-stamp extremal bases to see whether a sharper theorem is already

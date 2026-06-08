@@ -4,6 +4,7 @@ from interval_bases import (
     ell,
     ell_sharp,
     hfold_sumset,
+    interval_starts_of_length,
     verify_pattern,
 )
 
@@ -22,6 +23,10 @@ def test_ell_and_ell_sharp_for_signed_affine_example() -> None:
     basis = {-1, 1, 2}
     assert ell(basis, 2) == 4
     assert ell_sharp(basis, 2) == 4
+
+
+def test_interval_starts_of_length_lists_subintervals() -> None:
+    assert interval_starts_of_length({0, 1, 2}, 2, 2) == (0, 1, 2)
 
 
 def test_verify_pattern_reports_an_extension() -> None:

@@ -11,6 +11,9 @@ hA = {a_1 + ... + a_h : a_i in A}.
 The function `ell(A, h)` returns the largest `n` such that `[0, n]` is
 contained in `hA`. The function `ell_sharp(A, h)` returns the largest value of
 `v - u` over all consecutive intervals `[u, v]` contained in `hA`.
+The function `interval_starts_of_length(A, h, n)` returns all starts `c` for
+which `[c, c + n]` is contained in `hA`; this is the computational form of the
+starts-only questions.
 
 ## Exact Versus Bounded Searches
 
@@ -82,6 +85,11 @@ first cardinality found in the requested finite window for which `2A` has
 exactly one nontrivial maximal interval of length `n`. It is deliberately
 separate from the OEIS checks: it studies the no-extra-proper-interval
 condition used in the paper, not only the prefix invariant `n_2(k)`.
+
+The test suite also includes a direct finite check of the pair-sum-separated
+sparse multi-interval model from the paper, using
+`interval_starts_of_length` to verify that the length-`n` interval starts are
+exactly the prescribed starts.
 
 ## Lean Verification
 
