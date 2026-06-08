@@ -79,6 +79,14 @@ python -m interval_bases construct `
   --output certificates/sidon-large-translation.json
 ```
 
+Generate the sparse pair-separated starts-only construction:
+
+```powershell
+python -m interval_bases sparse-pair-construct `
+  --starts=0,50,150 `
+  --length 16
+```
+
 Run exact classical checks and bounded exploratory scans:
 
 ```powershell
@@ -95,6 +103,8 @@ python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-eleme
   from the refinement theorem and centers the target pattern modulo `h`.
 - `construct --scheme sidon` uses the quadratic-size shifted Sidon labels
   available for `h = 2`.
+- `sparse-pair-construct` builds the pair-sum separated sparse construction
+  and verifies the starts of all length-`n` intervals in `2A`.
 - `oeis-check` computes exact values of `n_h(k)` and compares selected values
   with [OEIS A001208][a001208] and [OEIS A001209][a001209].
 - `scan` is exploratory. Nonnegative results are bounded-window results unless

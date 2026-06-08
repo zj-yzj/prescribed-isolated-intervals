@@ -7,6 +7,7 @@ from interval_bases import (
     build_certificate,
     construct_isolated_intervals,
     construct_polynomial_isolated_intervals,
+    construct_sparse_pair_separated_intervals,
     construct_sidon_isolated_intervals,
     interval_starts_of_length,
     save_certificate,
@@ -142,32 +143,22 @@ def test_sidon_labels_separate_relevant_small_vectors() -> None:
 
 
 def test_sparse_pair_separated_multi_interval_model() -> None:
-    n = 16
-    a = int(n**0.5) - 1
-    b = a + 1
-    g = a * (a - 1)
-    n0 = n - (2 * a - 1)
-    v = n0 % a
-    u = (n0 - (a + 1) * v) // a
-    r_bound = a + u
-    s_bound = a - 1 + v
-    delta = max(n + 2 * g + 2, 2 * s_bound * b + 2)
-    gap = delta + 10
-    starts = (0, gap, 3 * gap)
+    construction = construct_sparse_pair_separated_intervals((0, 50, 150), 16)
 
-    x_packet = {i * a for i in range(r_bound + 1)}
-    y_packet = {j * b for j in range(s_bound + 1)}
-    max_pair_sum = max(left + right for left in starts for right in starts)
-    p_shift = 10 * (
-        max_pair_sum
-        + n
-        + g
-        + r_bound * a
-        + s_bound * b
-        + 100
-    )
-    basis = {p_shift + x for x in x_packet}
-    for start in starts:
-        basis.update(start - g - p_shift + y for y in y_packet)
+    assert construction.cardinality <= construction.cardinality_upper_bound
+    assert construction.cardinality_upper_bound == 20
+    assert interval_starts_of_length(construction.values, 2, 16) == (0, 50, 150)
 
-    assert interval_starts_of_length(basis, 2, n) == starts
+
+def test_sparse_pair_separated_rejects_close_pair_sums() -> None:
+    with pytest.raises(ValueError, match="distinct pair sums"):
+        construct_sparse_pair_separated_intervals((0, 20, 60), 16)
+
+
+def test_sparse_pair_separated_rejects_small_shift() -> None:
+    construction = construct_sparse_pair_separated_intervals((0, 50, 150), 16)
+
+    with pytest.raises(ValueError, match="shift must be at least"):
+        construct_sparse_pair_separated_intervals(
+            (0, 50, 150), 16, shift=construction.minimum_shift - 1
+        )

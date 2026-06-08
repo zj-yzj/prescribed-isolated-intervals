@@ -64,6 +64,9 @@ python -m interval_bases construct `
   --length 3 `
   --distance 4 `
   --output certificates/sidon-large-translation.json
+python -m interval_bases sparse-pair-construct `
+  --starts=0,50,150 `
+  --length 16
 python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-element 18
 ```
 
@@ -86,10 +89,9 @@ exactly one nontrivial maximal interval of length `n`. It is deliberately
 separate from the OEIS checks: it studies the no-extra-proper-interval
 condition used in the paper, not only the prefix invariant `n_2(k)`.
 
-The test suite also includes a direct finite check of the pair-sum-separated
-sparse multi-interval model from the paper, using
-`interval_starts_of_length` to verify that the length-`n` interval starts are
-exactly the prescribed starts.
+The `sparse-pair-construct` command builds the pair-sum-separated sparse
+multi-interval model from the paper and uses `interval_starts_of_length` to
+verify that the length-`n` interval starts are exactly the prescribed starts.
 
 ## Lean Verification
 

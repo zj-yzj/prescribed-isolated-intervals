@@ -10,8 +10,10 @@ from .certificates import build_certificate, save_certificate
 from .constructions import (
     construct_isolated_intervals,
     construct_polynomial_isolated_intervals,
+    construct_sparse_pair_separated_intervals,
     construct_sidon_isolated_intervals,
 )
+from .core import hfold_sumset, interval_starts_of_length
 from .search import (
     check_oeis_values,
     enumerate_exact_prefix_extremum,
@@ -96,6 +98,28 @@ def _strong_single_scan(args: argparse.Namespace) -> int:
     return 0
 
 
+def _sparse_pair_construct(args: argparse.Namespace) -> int:
+    construction = construct_sparse_pair_separated_intervals(
+        args.starts, args.length, shift=args.shift
+    )
+    actual_starts = interval_starts_of_length(
+        construction.values, construction.h, construction.n
+    )
+    result: dict[str, object] = {
+        "schema_version": 1,
+        "construction": construction.to_dict(),
+        "verification": {
+            "ok": actual_starts == construction.starts,
+            "expected_starts": list(construction.starts),
+            "actual_starts": list(actual_starts),
+        },
+    }
+    if args.include_sumset:
+        result["sumset"] = sorted(hfold_sumset(construction.values, construction.h))
+    _print_json(result)
+    return 0 if result["verification"]["ok"] else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -132,6 +156,16 @@ def build_parser() -> argparse.ArgumentParser:
     strong.add_argument("--max-k", required=True, type=int)
     strong.add_argument("--max-element", required=True, type=int)
     strong.set_defaults(handler=_strong_single_scan)
+
+    sparse_pair = subparsers.add_parser(
+        "sparse-pair-construct",
+        help="build a pair-sum separated sparse starts-only construction",
+    )
+    sparse_pair.add_argument("--starts", required=True, type=_parse_starts)
+    sparse_pair.add_argument("--length", required=True, type=int)
+    sparse_pair.add_argument("--shift", type=int)
+    sparse_pair.add_argument("--include-sumset", action="store_true")
+    sparse_pair.set_defaults(handler=_sparse_pair_construct)
     return parser
 
 

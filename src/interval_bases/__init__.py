@@ -3,8 +3,10 @@
 from .certificates import build_certificate, save_certificate
 from .constructions import (
     IsolatedIntervalConstruction,
+    SparsePairSeparatedConstruction,
     construct_isolated_intervals,
     construct_polynomial_isolated_intervals,
+    construct_sparse_pair_separated_intervals,
     construct_sidon_isolated_intervals,
 )
 from .core import (
@@ -22,10 +24,12 @@ __all__ = [
     "Interval",
     "IsolatedIntervalConstruction",
     "PatternVerification",
+    "SparsePairSeparatedConstruction",
     "build_certificate",
     "consecutive_intervals",
     "construct_isolated_intervals",
     "construct_polynomial_isolated_intervals",
+    "construct_sparse_pair_separated_intervals",
     "construct_sidon_isolated_intervals",
     "ell",
     "ell_sharp",

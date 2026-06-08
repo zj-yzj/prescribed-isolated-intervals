@@ -23,6 +23,9 @@ Completed:
 7. A sparse multi-interval theorem now works under a pair-sum separation
    hypothesis on `C + C`, giving `O(q sqrt(n))` elements for the starts-only
    double-sumset problem in that regime.
+8. The `sparse-pair-construct` command constructs and verifies this
+   pair-separated sparse model by enumerating all length-`n` interval starts
+   in `2A`.
 
 Remaining numerical polish: retaining the target count directly in
 `b_r = 2p^2 + 2pr + (r^2 mod p)` gives a slightly smaller prime-level upper
