@@ -34,24 +34,20 @@ theory, VII}}. In fact the required gap threshold is the minimal value
 $N_q=n+2$ allowed by the formulation, and the construction has
 $|A|=2q(n+1)$.
 
-The first proof uses a separated-label principle that reduces the problem to
-short integer relations among labels. We then replace the initial exponential
-labels by finite moment labels. For fixed $h$, this gives a diameter bound
-polynomial in the number of prescribed target points and independent of their
-absolute location after centering. For double sumsets, a shifted-Sidon label
-instance improves the diameter bound to quadratic, and a simple Sidon
-difference-counting argument shows that this quadratic order is unavoidable
-within the Sidon-label method. The main separation, interval-family,
-cardinality, translation, diameter, and shifted-Sidon arguments have been
-checked in Lean 4 with Mathlib.
+The proof uses a separated-label principle that reduces the construction to
+excluding short integer relations among labels. This framework also gives
+quantitative diameter refinements: finite moment labels give polynomial
+diameter for fixed $h$, Bose--Chowla labels improve the fixed-$h$ exponent,
+and shifted-Sidon labels give a quadratic double-sumset bound with a matching
+Sidon-method lower bound.
 
-We also give a second construction for the single-interval double-sumset
-problem. It reduces the number of elements from linear in the interval length
-to $O(\sqrt n)$, and this order is best possible. A multi-interval variant
-with $O(q\sqrt n)$ elements is obtained when the pair-sum set of the prescribed
-starts is itself sufficiently separated. These quantitative refinements are
-independent of the separated-label construction and use a two-colour bounded
-Frobenius packet.
+Finally, we study cardinality separately from complete isolation. A two-colour
+bounded Frobenius packet gives a single-interval double-sumset construction
+with $O(\sqrt n)$ elements, which is optimal in order. Under an additional
+pair-sum separation hypothesis on the starts, the same packet gives an
+$O(q\sqrt n)$ starts-only multi-interval construction. The main separation,
+interval-family, cardinality, translation, diameter, and shifted-Sidon
+arguments have been checked in Lean 4 with Mathlib.
 \end{abstract}
 
 \section{Introduction}
@@ -97,27 +93,24 @@ All other $h$-term sums carry a nonzero label. If the label family has no
 short relations, then these exceptional sums are far apart.
 
 The first version uses powers and has exponential diameter. The later
-sections replace the powers by finite moment labels, then by a
-Bose--Chowla modular $B_t$ construction, giving a much smaller polynomial
-diameter for fixed $h$. When $h=2$, shifted-Sidon labels give a quadratic
-diameter bound. The Sidon section also includes a lower bound showing that
-quadratic diameter is the best possible order for this Sidon-label strategy.
+sections replace the powers by finite moment labels and then by a
+Bose--Chowla modular $B_t$ construction, giving polynomial diameter for fixed
+$h$ with a smaller exponent. When $h=2$, shifted-Sidon labels give a direct
+quadratic diameter bound. The Sidon section also includes a lower bound
+showing that this quadratic order is forced by the Sidon-label strategy.
 These quantitative refinements are not needed merely to answer the existence
-questions, but they make the construction less ad hoc and identify where the
-real optimization problem begins.
+questions, but they separate the flexible cancellation mechanism from the
+arithmetic problem of choosing efficient labels.
 
-There is another, complementary optimization in the single-interval case. If
-one only asks that the longest interval in a double sumset have length $n$,
-and does not forbid shorter proper intervals elsewhere, then the interval need
-not be generated point by point. A two-colour packet built from the two
-arithmetic progressions with steps $a$ and $a+1$ produces one long interval in
-the cross-sum while the two same-colour sumsets have no adjacent elements. This
-gives a sparse single-interval construction with $O(\sqrt n)$ elements. A
-matching counting lower bound shows that this is the optimal order for any
-construction whose double sumset contains an interval of length $n$. The same
-packet can be reused for several prescribed starts if the pair sums
-$c_i+c_j$ are also separated; this yields an $O(q\sqrt n)$ sparse
-multi-interval theorem under an additive separation hypothesis.
+There is another, complementary optimization in the double-sumset case. If
+one asks only for the starts of intervals of length $n$, rather than complete
+isolation of every other sum, then an interval need not be generated point by
+point. A two-colour packet built from arithmetic progressions with steps $a$
+and $a+1$ produces one long interval in the cross-sum while the two same-colour
+sumsets have no adjacent elements. This gives an order-optimal sparse
+single-interval construction with $O(\sqrt n)$ elements, and an
+$O(q\sqrt n)$ multi-interval version whenever the pair sums $c_i+c_j$ are
+also separated.
 
 \section{A short separation lemma}
 
