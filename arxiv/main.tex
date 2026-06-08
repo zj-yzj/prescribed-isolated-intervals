@@ -17,24 +17,85 @@
 Ningbo University\\
 Ningbo, China\\
 \texttt{256001428@nbu.edu.cn}}
-\date{June 5, 2026}
+\date{June 8, 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
 We give an explicit construction of a finite set of integers whose $h$-fold
-sumset has any prescribed sufficiently separated family of nontrivial
-intervals and no others. This answers Problems 9 and 10 in
-\href{https://arxiv.org/abs/2605.26425}{Nathanson's problem list} with an
-explicit set of size $2q(n+1)$, and also answers the higher-order Problem 11.
-We then replace the initial exponential labels by finite moment labels. For
-fixed $h$, this gives polynomial diameter in the number of prescribed target
-points and works for an arbitrary finite target set. Both label choices are
-instances of a common separated-label principle. For double sumsets, a
-Sidon-label instance improves the diameter bound to quadratic. We record a
-small counterexample to the strict inequality proposed in Problem 7(2).
+sumset contains any prescribed finite target set and whose remaining elements
+are isolated. As a consequence, every sufficiently separated family of
+intervals can be prescribed as exactly the nontrivial intervals in an
+$h$-fold sumset. This answers the multi-interval questions numbered
+Problems 14--16 in Nathanson's June 8, 2026 revision of
+\href{https://arxiv.org/abs/2605.26425}{\emph{Problems in additive number
+theory, VII}}. In fact the required gap threshold is the minimal value
+$N_q=n+2$ allowed by the formulation, and the construction has
+$|A|=2q(n+1)$.
+
+The first proof uses a separated-label principle that reduces the problem to
+short integer relations among labels. We then replace the initial exponential
+labels by finite moment labels. For fixed $h$, this gives a diameter bound
+polynomial in the number of prescribed target points and independent of their
+absolute location after centering. For double sumsets, a shifted-Sidon label
+instance improves the diameter bound to quadratic, and a simple Sidon
+difference-counting argument shows that this quadratic order is unavoidable
+within the Sidon-label method. The main separation, interval-family,
+cardinality, translation, diameter, and shifted-Sidon arguments have been
+checked in Lean 4 with Mathlib.
 \end{abstract}
+
+\section{Introduction}
+
+Nathanson's problem list on additive $h$-bases for intervals asks how much
+control is possible over the intervals contained in finite sumsets. In a
+June 8, 2026 revision, the single-interval double-sumset case is constructed
+directly, and the remaining multi-interval questions ask whether one can
+prescribe a separated set
+\[
+ C=\{c_1<\cdots<c_q\}
+\]
+of starting points so that the only intervals of length $n$ in $2A$ start at
+the elements of $C$, with a stronger version forbidding all additional
+proper intervals. The same revision asks for the corresponding higher-fold
+problem when $h\geq 3$.
+
+The point of this note is that the multi-interval problem is more naturally a
+finite-target problem. Let
+\[
+ S=\bigcup_{i=1}^q[c_i,c_i+n].
+\]
+It is enough to construct $A$ so that
+\[
+ hA=S\mathbin{\dot\cup}E,
+\]
+where every point of $E$ is separated from $S$ and from every other point of
+$E$ by at least two. Then the maximal nontrivial intervals in $hA$ are
+exactly the maximal nontrivial intervals already present in $S$. The
+construction below proves this for every $h\geq 2$ and, more generally, for
+an arbitrary finite target set $S\subseteq\Z$.
+
+The mechanism is a tagged cancellation construction. To each target point
+$t_r$ we attach a large label $a_r$ and put two generators into $A$,
+\[
+ t_r+(h-1)a_r
+ \qquad\text{and}\qquad
+ -a_r.
+\]
+The intended representation of $t_r$ is the matched sum consisting of one
+positive generator and $h-1$ copies of the corresponding negative generator.
+All other $h$-term sums carry a nonzero label. If the label family has no
+short relations, then these exceptional sums are far apart.
+
+The first version uses powers and has exponential diameter. The later
+sections replace the powers by finite moment labels, giving polynomial
+diameter for fixed $h$, and by shifted-Sidon labels when $h=2$, giving
+quadratic diameter. The Sidon section also includes a lower bound showing
+that quadratic diameter is the best possible order for this Sidon-label
+strategy. These quantitative refinements are not needed merely to answer the
+existence questions, but they make the construction less ad hoc and identify
+where the real optimization problem begins.
 
 \section{A short separation lemma}
 
@@ -94,44 +155,107 @@ and every element of $E$ is at distance at least $d$ from $S$.
 \end{proposition}
 
 \begin{proof}
-Attach to $t_r+(h-1)a_r$ the label vector $(h-1)e_r$ and offset $t_r$, and
-attach to $-a_r$ the label vector $-e_r$ and offset $0$. Distinct tagged
-generators have distinct label vectors, combined norm at most $2H$, and
-offsets differing by at most $2T<M$. Thus \eqref{eq:abstract-separation}
-shows that their integer values are distinct, so $|A|=2m$.
+Attach to the generator $t_r+(h-1)a_r$ the label vector $(h-1)e_r$ and
+offset $t_r$. Attach to the generator $-a_r$ the label vector $-e_r$ and
+offset $0$. The integer value of a tagged generator is its offset plus the
+dot product of its label vector with $(a_0,\ldots,a_{m-1})$.
 
-Every element of $hA$ is a bounded offset plus $\sum_r v_ra_r$, where
-$\lVert v\rVert_1\leq H$. Let $p_r$ and $u_r$ count the positive and negative
-terms with index $r$ in an $h$-term sum. A zero label vector satisfies
-$(h-1)p_r=u_r$ for every $r$. Since
+We first check that the displayed union defining $A$ is disjoint and has the
+claimed cardinality. Distinct tagged generators have distinct label vectors.
+The sum of the $\ell^1$ norms of two generator labels is at most
+$2(h-1)\leq 2H$, and their offsets differ by at most $2T$. Since
+$M\geq 2hT+d>2T$, the separation hypothesis
+\eqref{eq:abstract-separation} implies that two distinct tagged generators
+cannot have the same integer value. Hence $|A|=2m$.
+
+Now consider an arbitrary $h$-term sum from $A$. Let $p_r$ be the number of
+times the positive generator $t_r+(h-1)a_r$ is used, and let $u_r$ be the
+number of times the negative generator $-a_r$ is used. Thus
+\[
+ \sum_r(p_r+u_r)=h.
+\]
+The label coefficient of this representation is
+\[
+ v_r=(h-1)p_r-u_r.
+\]
+Its norm is bounded by
+\[
+ \sum_r |v_r|
+ \leq (h-1)\sum_rp_r+\sum_ru_r
+ \leq h(h-1)=H,
+\]
+and the offset $\sum_rp_rt_r$ has absolute value at most $hT$.
+
+The target points are exactly the sums with zero label. Indeed, if $v=0$,
+then $(h-1)p_r=u_r$ for every $r$. Therefore
 \[
  \sum_r(p_r+u_r)=h\sum_rp_r=h,
 \]
-there is exactly one positive term and $h-1$ matching negative terms. Hence
-the zero-label sums are exactly
+so $\sum_rp_r=1$. There is exactly one index $r$ with $p_r=1$, and then
+$u_r=h-1$ while all other counts vanish. The corresponding sum is
 \[
  (t_r+(h-1)a_r)+(h-1)(-a_r)=t_r.
 \]
+Conversely, this matched representation gives every $t_r$. Thus the
+zero-label part of $hA$ is precisely $S$.
 
-Every other sum has a nonzero label vector. Such a vector determines its
-multiset of terms: if two multisets with counts $(p_r,u_r)$ and
-$(p'_r,u'_r)$ had the same nonzero vector but were different, then
+It remains to see that exceptional sums cannot cluster. A nonzero label
+vector determines its multiset of terms. Suppose two $h$-term multisets with
+counts $(p_r,u_r)$ and $(p'_r,u'_r)$ have the same label vector. Then
 \[
  u_r-u'_r=(h-1)(p_r-p'_r).
 \]
-Summing and using that both multisets have $h$ terms shows that
-$\sum_rp_r=\sum_rp'_r$. At an index with $p_r>p'_r$, the first multiset
-would contain at least one positive term and $h-1$ matching negative terms.
-It would therefore be the zero-label matched sum, a contradiction.
+Summing this identity over $r$ and using the fact that both multisets have
+$h$ terms gives $\sum_rp_r=\sum_rp'_r$. If the positive count vectors were
+not equal, choose an index with $p_r>p'_r$. Then $p_r\geq 1$ and the
+displayed identity gives $u_r\geq h-1$. These already use all $h$ terms, so
+the first multiset is a matched zero-label representation, contradicting the
+assumption that the common label vector is nonzero. Hence $p=p'$ and then
+also $u=u'$.
 
-Finally, every representation offset has absolute value at most $hT$.
-Distinct exceptional sums have distinct label vectors, and an exceptional
-sum also has a label vector distinct from the zero vector of a target.
-Equation~\eqref{eq:abstract-separation} and the offset bound leave a gap of
-at least $M-2hT\geq d$.
+Consequently, two distinct exceptional sums have distinct nonzero label
+vectors. Also, every exceptional sum has a label vector distinct from the
+zero label of a target point. For two exceptional sums, or for an exceptional
+sum and a target point, the two label vectors have combined norm at most
+$2H$. Equation~\eqref{eq:abstract-separation} gives label separation at
+least $M$, while the two offsets together can change the distance by at most
+$2hT$. The remaining distance is at least
+\[
+ M-2hT\geq d.
+\]
+This proves the required decomposition and isolation.
 \end{proof}
 
 \section{The construction}
+
+\begin{theorem}[Finite target realization]\label{thm:finite-target}
+Let $h\geq 2$, $d\geq 1$, and let $S\subseteq\Z$ be a nonempty finite set
+with $m=|S|$. There is an explicitly constructible set $A\subseteq\Z$ with
+$|A|=2m$ such that
+\[
+ hA=S\mathbin{\dot\cup}E,
+\]
+where distinct elements of $E$ are at distance at least $d$ from one another
+and every element of $E$ is at distance at least $d$ from $S$.
+\end{theorem}
+
+\begin{proof}
+Enumerate $S=\{t_0,\ldots,t_{m-1}\}$ and put
+\[
+ T=\max_{t\in S}|t|,
+ \qquad M=2hT+d,
+ \qquad B=2h(h-1),
+ \qquad a_r=MB^r.
+\]
+Lemma~\ref{lem:separation} verifies
+\eqref{eq:abstract-separation} for these labels: if the two coefficient
+vectors have combined $\ell^1$ norm at most $B=2h(h-1)$, then their
+positional values differ by at least $M$. Proposition~\ref{prop:labels}
+therefore gives the required set
+\[
+ A=\{t_r+(h-1)a_r:0\leq r<m\}\cup\{-a_r:0\leq r<m\}.
+\]
+\end{proof}
 
 \begin{theorem}[Prescribed isolated intervals]\label{thm:main}
 Let $h\geq 2$, $n\geq 1$, $d\geq 2$, $q\geq 1$, and
@@ -155,27 +279,17 @@ exactly the intervals $[c_i,c_i+n]$.
 \end{theorem}
 
 \begin{proof}
-List the $q(n+1)$ elements of $S$ as $t_0,\ldots,t_{m-1}$, where
-$m=q(n+1)$. Set
-\[
- T=\max_{t\in S}|t|,
- \qquad M=2hT+d,
- \qquad B=2h(h-1),
- \qquad a_r=MB^r,
-\]
-and define
-\[
- A=\{t_r+(h-1)a_r:0\leq r<m\}\cup\{-a_r:0\leq r<m\}.
-\]
-Lemma~\ref{lem:separation} verifies \eqref{eq:abstract-separation} with
-$B=2h(h-1)$. Proposition~\ref{prop:labels} gives $|A|=2m$, the decomposition
+Because $c_{i+1}-c_i\geq n+2$, the intervals $[c_i,c_i+n]$ are disjoint
+and separated from one another by at least one missing integer. Hence
+$|S|=q(n+1)$. Apply Theorem~\ref{thm:finite-target} to this finite target
+set $S$. It gives $|A|=2q(n+1)$, the decomposition
 $hA=S\mathbin{\dot\cup}E$, and the required distance bounds.
 Since $d\geq 2$ and the intervals in $S$ are separated by at least one
 missing integer, no exceptional point can extend a target interval or form a
 new nontrivial interval.
 \end{proof}
 
-\begin{corollary}[Single interval replacement]\label{cor:single}
+\begin{corollary}[Single interval specialization]\label{cor:single}
 For all $h\geq 2$, $c\in\Z$, $n\geq 1$, and $d\geq 2$, there is a set
 $A\subseteq\Z$ with $|A|=2n+2$ such that $[c,c+n]\subseteq hA$, every
 element of $hA\setminus[c,c+n]$ is at distance at least $d$ from every
@@ -187,22 +301,46 @@ length $n$.
 Apply Theorem~\ref{thm:main} with $C=\{c\}$.
 \end{proof}
 
-\begin{corollary}[Problems 9--11]\label{cor:problems}
-In the notation of Problems 9--11 of Nathanson's problem list, the
-assertions hold for every $N_q$ allowed in the question, with
+\begin{corollary}[Nathanson's revised multi-interval problems]\label{cor:problems}
+In the notation of Problems 14--16 in Nathanson's June 8, 2026 revision,
+Problems 14 and 15 are true, and Problem 16 is true for every $h\geq 3$.
+More precisely, one can take the threshold
+\[
+ N_q=n+2
+\]
+and
 \[
  k_C=2q(n+1).
 \]
 \end{corollary}
 
 \begin{proof}
-The hypotheses give $c_{i+1}-c_i\geq N_q\geq n+2$. Apply
-Theorem~\ref{thm:main} with $d=2$, taking $h=2$ for Problems 9--10 and the
-specified value of $h$ for Problem 11.
+The hypotheses in the revised problems include $2\leq n\leq N_q-2$, so
+$N_q=n+2$ is the smallest possible threshold compatible with that
+formulation. If $c_{i+1}-c_i\geq n+2$, then Theorem~\ref{thm:main} with
+$d=2$ gives
+\[
+ hA=S\mathbin{\dot\cup}E,
+ \qquad S=\bigcup_{i=1}^q[c_i,c_i+n],
+\]
+where every point of $E$ is isolated from every other point of $hA$.
+
+For $h=2$, the only intervals of length $n$ in $2A$ are the displayed
+intervals $[c_i,c_i+n]$, proving Problem 14. Since every element outside
+$S$ is isolated and at distance at least two from $S$, every interval of
+length one in $2A$ lies inside one of the intervals $[c_i,c_i+n]$, proving
+the stronger Problem 15. The same argument with the prescribed value
+$h\geq 3$ proves Problem 16.
 \end{proof}
 
 \begin{remark}[Diameter bound]
-The construction in Theorem~\ref{thm:main} satisfies
+For
+\[
+ S=\bigcup_{i=1}^q[c_i,c_i+n],
+ \qquad
+ T=\max_{s\in S}|s|,
+\]
+the construction in Theorem~\ref{thm:main} satisfies
 \[
  \operatorname{diam}(A)
  \leq h(2hT+d)\bigl(2h(h-1)\bigr)^{q(n+1)-1}+T.
@@ -478,26 +616,23 @@ unavoidable within the Sidon-label method. Optimizing either the cardinality
 or the degree for $h\geq 3$ remains open.
 \end{remark}
 
-\section{Audit notes and a small counterexample}
+\section{Relation with the single-interval construction}
 
-The proof above also supplies a replacement proof for the single-interval
-statement in Theorem 4 of Nathanson's preprint. In the current source, the
-displayed separation parameter is
-\[
- \Delta=\min(3,2|c|+d+2n),
-\]
-while later estimates require a parameter larger than quantities depending
-on $|c|$, $d$, and $n$. The replacement argument avoids that discrepancy.
+Nathanson's June 8 revision contains a direct construction for one prescribed
+interval in a double sumset. The special case $q=1$ and $h=2$ of
+Corollary~\ref{cor:single} gives another route to the same type of
+single-interval conclusion, but this is not the main point of the present
+paper. The label construction is designed to make independent cancellations
+for many target points coexist without producing additional adjacent
+exceptional sums. This is what allows the same argument to treat the
+multi-interval questions and the higher-fold case uniformly.
 
-Problem 7(2) asks whether a negative element forces a strict loss in the
-initial interval. This is false: take $h=2$, $k=3$, and
-\[
- A=\{-1,1,2\}.
-\]
-Then $[0,4]\subseteq 2A$. To see that $n_2(3)=4$, write a nonnegative
-three-element basis for an initial interval as $\{0,1,a\}$. If $a=2$ or
-$a=3$, its initial interval ends at $4$, while if $a>3$, the integer $3$ is
-missing. Hence $\ell_2(A)=n_2(3)$ even though $\min(A)<0$.
+The quantitative refinements also belong to the finite-target viewpoint.
+Moment labels make the construction polynomial in the number of target
+points for fixed $h$, after centering the target set. For $h=2$, shifted
+Sidon labels give a quadratic diameter bound, and
+Proposition~\ref{prop:sidon-barrier} shows that this order is forced by the
+Sidon-label mechanism itself.
 
 \section{Reproducibility}
 
@@ -513,17 +648,24 @@ The resulting Lean theorem automatically selects the target radius and
 substitutes the displayed values of $M$ and $B$. The finite moment-label
 Vandermonde argument, translation rule, closed diameter estimate, exact
 cardinality, midpoint-centering lemma, and interval-family theorem have also
-been formalized. The audit note about the earlier preprint remains an
-ordinary paper argument. For the shifted-Sidon refinement, Lean checks the
-size bounds and the reduction from
+been formalized. For the shifted-Sidon refinement, Lean checks the size
+bounds and the reduction from
 order-four short-relation freedom to set-level isolation, including the
 explicit pair-sum argument over $\mathbb F_p$. It also checks translation
 invariance, quadratic diameter upper and lower bounds, tightened
 Bertrand-prime selection, exact cardinality after translation, and the final
 separated-interval wrapper. The midpoint translation, radius, and scale are
-selected automatically from an enclosing interval. Lean also checks the direct
-Problem 7(2)
-witness $\{-1,1,2\}$ and the containment $[0,4]\subseteq 2A$; the classical
-identification $n_2(3)=4$ remains the short paper argument given above.
+selected automatically from an enclosing interval.
+
+\begin{thebibliography}{9}
+
+\bibitem{NathansonVII}
+Melvyn B. Nathanson,
+\emph{Problems in additive number theory, VII: The structure of additive
+$h$-bases for $n$},
+preprint, 2026.
+\href{https://arxiv.org/abs/2605.26425}{arXiv:2605.26425}.
+
+\end{thebibliography}
 
 \end{document}

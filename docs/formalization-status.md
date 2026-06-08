@@ -211,22 +211,13 @@ checks the paper-facing shifted-Sidon layer:
 - `explicitCenteredShiftedSidonBasis_diameter_lower_bound` carries the
   quadratic lower bound through the paper-facing translated basis.
 
-[`Formalization/AuditExamples.lean`](../Formalization/AuditExamples.lean)
-checks the direct Problem 7(2) witness:
-
-- the set `{-1, 1, 2}` has cardinality three and contains a negative element;
-- every integer in `[0, 4]` belongs to its double sumset.
-
 ## Boundary
 
 The main constructive theorem is fully represented as a Lean declaration.
-The short audit note about Nathanson's Theorem 4 parameter remains an ordinary
-paper argument. Lean checks the direct Problem 7(2) witness; the classical
-upper-bound argument identifying `n_2(3) = 4` remains in the paper. The newer
-finite moment-label refinement now has Lean declarations through its
-position-independent closed interval-family theorem. Independent
-mathematical review is still appropriate before submission. For the shifted
-Sidon refinement, Lean checks the explicit pair-sum argument over `ZMod p`,
+The finite moment-label refinement now has Lean declarations through its
+position-independent closed interval-family theorem. Independent mathematical
+review is still appropriate before submission. For the shifted Sidon
+refinement, Lean checks the explicit pair-sum argument over `ZMod p`,
 order-four short-relation freedom, set-level isolation, translation
 invariance, quadratic upper and lower bounds, tightened Bertrand-prime
 selection, exact cardinality after translation, and the automatically

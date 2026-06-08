@@ -92,9 +92,6 @@ exact cardinality after translation, and the final separated-interval
 wrapper. Lean also selects a midpoint translation, centered radius, and scale
 automatically. Exact
 Python tests and the saved certificate provide an independent computational check.
-Lean also checks the direct Problem 7(2) witness `{-1, 1, 2}` and the
-containment `[0, 4] subseteq 2A`.
-
 
 ## Classical Cross-Checks
 

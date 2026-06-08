@@ -18,7 +18,7 @@ def test_consecutive_intervals_filters_singletons() -> None:
     )
 
 
-def test_ell_and_ell_sharp_for_problem_7_counterexample() -> None:
+def test_ell_and_ell_sharp_for_signed_affine_example() -> None:
     basis = {-1, 1, 2}
     assert ell(basis, 2) == 4
     assert ell_sharp(basis, 2) == 4
@@ -29,4 +29,3 @@ def test_verify_pattern_reports_an_extension() -> None:
     assert not report.ok
     assert report.actual_nontrivial_intervals == (Interval(0, 2),)
     assert report.first_failure == "missing target interval Interval(start=0, end=1)"
-

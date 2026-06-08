@@ -6,11 +6,12 @@ granted to copy, redistribute, publish, submit, or prepare derivative scholarly
 work from the manuscript, code, Lean formalization, certificates, or
 documentation without prior written permission.
 
-This repository supports a constructive study of Problems 9-11 in Melvyn
-Nathanson's [*Problems in additive number theory, VII*][nathanson]. The main
-result implemented here is an explicit construction of a finite integer set
-`A` whose `h`-fold sumset has any prescribed, sufficiently separated family
-of nontrivial consecutive intervals and no others, for every `h >= 2`.
+This repository supports a constructive study of the multi-interval questions
+numbered Problems 14-16 in Melvyn Nathanson's June 8, 2026 revision of
+[*Problems in additive number theory, VII*][nathanson]. The main result
+implemented here is an explicit construction of a finite integer set `A` whose
+`h`-fold sumset has any prescribed, sufficiently separated family of
+nontrivial consecutive intervals and no others, for every `h >= 2`.
 
 For starts `C = {c_1, ..., c_q}`, interval length `n >= 1`, and isolation
 distance `d >= 2`, the construction has
@@ -135,9 +136,6 @@ separation, set-level isolation theorem, translation invariance, diameter
 upper and lower bounds, tightened Bertrand-prime estimate, exact cardinality,
 and automatically centered interval-family wrapper are also kernel-checked
 in Lean.
-The direct Problem 7(2) audit witness `A = {-1, 1, 2}` and
-`[0, 4] subseteq 2A` is kernel-checked as well.
-
 ## Paper And Documentation
 
 - [`paper/prescribed-isolated-intervals.tex`](paper/prescribed-isolated-intervals.tex)

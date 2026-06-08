@@ -51,10 +51,6 @@ in the same file. The corresponding automatically centered finite-moment
 theorem is
 `IntervalBases.exists_explicitTranslatedMomentBasis_has_exactly_intervals_enclosed`
 in `Formalization/MomentDiameter.lean`.
-The direct Problem 7(2) witness is
-`IntervalBases.Icc_zero_four_subset_two_problemSevenCounterexample` in
-`Formalization/AuditExamples.lean`.
-
 ## Classical cross-check
 
 ```powershell

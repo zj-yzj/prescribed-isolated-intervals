@@ -20,4 +20,3 @@ import Formalization.SidonPaperCorollary
 import Formalization.TranslatedPatterns
 import Formalization.Centering
 import Formalization.MomentDiameter
-import Formalization.AuditExamples

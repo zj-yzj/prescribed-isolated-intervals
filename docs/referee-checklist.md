@@ -56,12 +56,13 @@ Use this as an adversarial review pass before circulating the draft.
 
 ## Relation to the preprint
 
-- [ ] Re-read Problems 9--11 in arXiv:2605.26425v2 and state precisely why
-  `d = 2` implies each requested assertion.
-- [ ] Check the Problem 7(2) example directly:
-  `A = {-1, 1, 2}`, `[0, 4] subseteq 2A`, and `n_2(3) = 4`.
-- [ ] Quote Theorem 4's displayed `Delta` exactly and distinguish a likely
-  typographical issue from a proved flaw.
+- [ ] Re-read Problems 14--16 in Nathanson's June 8, 2026 revision and state
+  precisely why `d = 2` gives Problems 14 and 15 for `h = 2` and Problem 16
+  for every prescribed `h >= 3`.
+- [ ] Check that the paper does not rely on the obsolete Problem 7 audit line
+  or on the earlier single-interval parameter issue.
+- [ ] Clearly distinguish Nathanson's single-interval double-sumset
+  construction from the multi-interval and higher-fold construction here.
 
 ## Machine checks
 
