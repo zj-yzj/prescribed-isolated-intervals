@@ -195,6 +195,9 @@ are currently paper proofs with Python implementations, not Lean theorems.
   adversarial mathematical review pass before circulation.
 - [`docs/reproduction-checklist.md`](docs/reproduction-checklist.md)
   records clean commands and expected results for reproducing the checks.
+- [`docs/submission-readiness.md`](docs/submission-readiness.md)
+  records the honest preprint/journal readiness status and a short update
+  draft for Nathanson.
 - [`docs/next-results.md`](docs/next-results.md) separates low-risk
   cleanup from the next genuinely mathematical strengthening directions.
 

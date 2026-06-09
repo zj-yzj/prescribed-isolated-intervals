@@ -5,11 +5,11 @@ Run commands from the workspace root.
 ## Python environment
 
 ```powershell
-python -m pip install -e .[dev]
+python -m pip install -e .
 python -m pytest
 ```
 
-Expected test result: `19 passed`.
+Expected test result: `27 passed`.
 
 ## Lean formalization
 
@@ -51,6 +51,7 @@ in the same file. The corresponding automatically centered finite-moment
 theorem is
 `IntervalBases.exists_explicitTranslatedMomentBasis_has_exactly_intervals_enclosed`
 in `Formalization/MomentDiameter.lean`.
+
 ## Classical cross-check
 
 ```powershell
@@ -89,6 +90,18 @@ This exercises the shifted Sidon labels. It should report `label_scheme` as
 `sidon`, a small normalized `target_radius`, and no unexpected nontrivial
 interval.
 
+## Sparse starts-only constructions
+
+```powershell
+python -m interval_bases sparse-pair-construct --starts=0,50,150 --length 16
+python -m interval_bases sparse-crt-construct --starts=0,2116800 --length 705600
+```
+
+The first command enumerates the relevant double sumset and verifies that the
+length-`n` starts are exactly the requested starts. The second command records
+the CRT steps, packet bounds, and structural certificate from the paper; do
+not use `--include-sumset` for this large example.
+
 ## Bounded side scan
 
 ```powershell
@@ -101,9 +114,9 @@ equality among the stamp-problem variants.
 ## Paper build
 
 ```powershell
-New-Item -ItemType Directory -Force output/latex-build | Out-Null
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory output/latex-build paper/prescribed-isolated-intervals.tex
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory output/latex-build paper/prescribed-isolated-intervals.tex
+New-Item -ItemType Directory -Force output/paper-build | Out-Null
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory output/paper-build paper/prescribed-isolated-intervals.tex
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory output/paper-build paper/prescribed-isolated-intervals.tex
 ```
 
 Review the build log and rendered pages. The curated review copy committed in
