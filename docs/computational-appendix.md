@@ -68,8 +68,8 @@ python -m interval_bases sparse-pair-construct `
   --starts=0,50,150 `
   --length 16
 python -m interval_bases sparse-crt-construct `
-  --starts=0,529200 `
-  --length 176400
+  --starts=0,2116800 `
+  --length 705600
 python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-element 18
 ```
 

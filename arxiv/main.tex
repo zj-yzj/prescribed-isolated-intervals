@@ -716,9 +716,15 @@ $[c_i,c_i+n]$.
 It remains to keep all unmatched colour sums from interacting. Choose
 positional labels $\ell_i=M4^{i-1}$ with $M$ so large that packets carrying
 different nonzero label vectors are separated from one another and from all
-zero-label packets by at least one missing integer. Concretely, let $T_0$ be
-the maximum absolute value of an element occurring in any unlabelled two-term
-packet
+zero-label packets by at least one missing integer. To make this precise,
+give every element of $X_i$ the label vector $e_i$ and every element of $Y_i$
+the label vector $-e_i$. Thus the two-term packet $X_i+X_j$ has label
+$e_i+e_j$, the packet $X_i+Y_j$ has label $e_i-e_j$, and the packet
+$Y_i+Y_j$ has label $-e_i-e_j$. The only zero-label packets are the matched
+packets $X_i+Y_i$.
+
+Let $T_0$ be the maximum absolute value of an element occurring in any
+unlabelled two-term packet
 \[
  X_i+X_j,\qquad c_j-g_j+X_i+Y_j,\qquad
  c_i+c_j-g_i-g_j+Y_i+Y_j,
@@ -726,9 +732,9 @@ packet
 and take $M=2T_0+2$. Lemma~\ref{lem:separation}, with $B=4$, implies that
 distinct two-term label vectors of $\ell^1$ norm at most $2$ differ in their
 label contribution by at least $M$, and the unlabelled offsets can change a
-distance by at most $2T_0$. For the sign patterns that occur here, a nonzero
-two-term label vector determines its packet, up to the harmless order of the
-two summands in $X_i+X_j$ or $Y_i+Y_j$.
+distance by at most $2T_0$. For the three sign patterns above, a nonzero
+two-term label vector determines the relevant packet type and its indices, up
+to the harmless order of the two summands in $X_i+X_j$ or $Y_i+Y_j$.
 
 Define
 \[
