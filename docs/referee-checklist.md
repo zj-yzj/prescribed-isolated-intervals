@@ -57,8 +57,17 @@ Use this as an adversarial review pass before circulating the draft.
   distinct elements of `C + C` must keep all `Y_i + Y_j` packets from
   interlacing, and it must also imply the required separation of the cross-sum
   packets.
-- [ ] Confirm that the sparse theorem is only single-interval and starts-only;
-  it is not used as a proof of the arbitrary multi-interval Problems 14--16.
+- [ ] Check the CRT-incompatible multi-interval theorem:
+  `a_i` is even, `a_i + 1` is divisible by `3`, and for `i != j` both
+  `a_i` and `a_j + 1` are divisible by `p_j`.
+- [ ] Verify that the CRT window
+  `[floor(sqrt(n)) - W, floor(sqrt(n)) - 1]` gives
+  `sqrt(n) / 2 <= a_i <= sqrt(n) - 1` under the stated
+  `floor(sqrt(n)) >= 4W` hypothesis.
+- [ ] Verify that the positional labels separate all nonzero two-term colour
+  packets from one another and from the zero-label packets.
+- [ ] Confirm that the sparse theorems are starts-only; they are not used as
+  proofs of the complete-isolation Problems 15--16.
 
 ## Quadratic double-sumset refinement
 
@@ -87,7 +96,7 @@ Use this as an adversarial review pass before circulating the draft.
 
 ## Relation to the preprint
 
-- [ ] Re-read Problems 14--16 in Nathanson's June 8, 2026 revision and state
+- [ ] Re-read Problems 14--16 in Nathanson's June 8, 2026 draft revision and state
   precisely why `d = 2` gives Problems 14 and 15 for `h = 2` and Problem 16
   for every prescribed `h >= 3`.
 - [ ] Check that the paper does not rely on the obsolete Problem 7 audit line

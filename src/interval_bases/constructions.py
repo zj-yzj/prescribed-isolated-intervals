@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from math import isqrt
+from math import isqrt, prod
 from typing import Sequence
 
 from .core import Interval
@@ -138,6 +138,78 @@ class SparsePairSeparatedConstruction:
         }
 
 
+@dataclass(frozen=True)
+class SparseCrtSeparatedConstruction:
+    """Starts-only sparse construction using CRT-incompatible packet steps."""
+
+    starts: tuple[int, ...]
+    n: int
+    primes: tuple[int, ...]
+    modulus: int
+    minimum_root: int
+    minimum_spacing: int
+    separation_scale: int
+    labels: tuple[int, ...]
+    steps: tuple[int, ...]
+    next_steps: tuple[int, ...]
+    frobenius_numbers: tuple[int, ...]
+    r_bounds: tuple[int, ...]
+    s_bounds: tuple[int, ...]
+    x_packets: tuple[tuple[int, ...], ...]
+    y_packets: tuple[tuple[int, ...], ...]
+    values: tuple[int, ...]
+
+    @property
+    def h(self) -> int:
+        return 2
+
+    @property
+    def target_intervals(self) -> tuple[Interval, ...]:
+        return tuple(Interval(start, start + self.n) for start in self.starts)
+
+    @property
+    def cardinality(self) -> int:
+        return len(self.values)
+
+    @property
+    def cardinality_upper_bound(self) -> int:
+        return sum(
+            len(x_packet) + len(y_packet)
+            for x_packet, y_packet in zip(self.x_packets, self.y_packets)
+        )
+
+    @property
+    def diameter(self) -> int:
+        return self.values[-1] - self.values[0]
+
+    def to_dict(self) -> dict[str, object]:
+        return {
+            "starts": list(self.starts),
+            "h": self.h,
+            "n": self.n,
+            "primes": list(self.primes),
+            "modulus": self.modulus,
+            "minimum_root": self.minimum_root,
+            "minimum_spacing": self.minimum_spacing,
+            "separation_scale": self.separation_scale,
+            "labels": list(self.labels),
+            "steps": list(self.steps),
+            "next_steps": list(self.next_steps),
+            "frobenius_numbers": list(self.frobenius_numbers),
+            "r_bounds": list(self.r_bounds),
+            "s_bounds": list(self.s_bounds),
+            "x_packets": [list(packet) for packet in self.x_packets],
+            "y_packets": [list(packet) for packet in self.y_packets],
+            "values": list(self.values),
+            "cardinality": self.cardinality,
+            "cardinality_upper_bound": self.cardinality_upper_bound,
+            "diameter": self.diameter,
+            "target_intervals": [
+                interval.to_dict() for interval in self.target_intervals
+            ],
+        }
+
+
 def _normalized_starts(starts: Sequence[int]) -> tuple[int, ...]:
     normalized = tuple(sorted(set(starts)))
     if not normalized:
@@ -163,6 +235,16 @@ def _sparse_packet_parameters(n: int) -> tuple[int, int, int, int, int, int, int
     if n < 16:
         raise ValueError("n must be at least 16 for the sparse packet")
     a = isqrt(n) - 1
+    return _sparse_packet_parameters_for_step(n, a)
+
+
+def _sparse_packet_parameters_for_step(
+    n: int, a: int
+) -> tuple[int, int, int, int, int, int, int]:
+    if a < 2:
+        raise ValueError("packet step must be at least 2")
+    if a + 1 > isqrt(n):
+        raise ValueError("packet step must satisfy a + 1 <= floor(sqrt(n))")
     b = a + 1
     g = a * (a - 1)
     n0 = n - (2 * a - 1)
@@ -173,6 +255,31 @@ def _sparse_packet_parameters(n: int) -> tuple[int, int, int, int, int, int, int
     r_bound = a + u
     s_bound = a - 1 + v
     return a, b, g, u, v, r_bound, s_bound
+
+
+def _first_primes_at_least(count: int, lower_bound: int) -> tuple[int, ...]:
+    primes: list[int] = []
+    candidate = lower_bound
+    while len(primes) < count:
+        if _is_prime(candidate):
+            primes.append(candidate)
+        candidate += 1
+    return tuple(primes)
+
+
+def _crt(residues_and_moduli: Sequence[tuple[int, int]]) -> int:
+    """Return the least nonnegative CRT solution for coprime moduli."""
+
+    value = 0
+    modulus = 1
+    for residue, next_modulus in residues_and_moduli:
+        residue %= next_modulus
+        inverse = pow(modulus, -1, next_modulus)
+        adjustment = ((residue - value) * inverse) % next_modulus
+        value += modulus * adjustment
+        modulus *= next_modulus
+        value %= modulus
+    return value
 
 
 def construct_isolated_intervals(
@@ -506,5 +613,143 @@ def construct_sparse_pair_separated_intervals(
         shift=shift,
         x_packet=x_packet,
         y_packet=y_packet,
+        values=tuple(sorted(values)),
+    )
+
+
+def construct_sparse_crt_separated_intervals(
+    starts: Sequence[int],
+    n: int,
+) -> SparseCrtSeparatedConstruction:
+    """Construct sparse starts-only intervals without pair-sum separation.
+
+    This construction assigns each prescribed interval its own pair of
+    consecutive steps. The steps are chosen by the Chinese remainder theorem:
+    the matched pair is coprime and produces a long Frobenius interval, while
+    every unmatched colour pair has a common prime divisor and therefore no
+    adjacent sums. The starts must be separated by at least ``3 * n``.
+    """
+
+    if n < 1:
+        raise ValueError("n must be positive")
+    normalized_starts = _normalized_starts(starts)
+    if any(
+        right - left < 3 * n
+        for left, right in zip(normalized_starts, normalized_starts[1:])
+    ):
+        raise ValueError("consecutive starts must differ by at least 3n")
+
+    q = len(normalized_starts)
+    primes = _first_primes_at_least(q, 5)
+    modulus = 6 * prod(primes)
+    root = isqrt(n)
+    minimum_root = 4 * modulus
+    if root < minimum_root:
+        raise ValueError(
+            "n is too small for the CRT sparse construction: "
+            f"floor(sqrt(n)) must be at least {minimum_root}"
+        )
+
+    steps: list[int] = []
+    for index, prime in enumerate(primes):
+        congruences: list[tuple[int, int]] = [(0, 2), (-1, 3)]
+        for other_index, other_prime in enumerate(primes):
+            congruences.append(
+                (-1 if other_index == index else 0, other_prime)
+            )
+        residue = _crt(congruences)
+        lower = root - modulus
+        multiplier = (lower - residue + modulus - 1) // modulus
+        step = residue + multiplier * modulus
+        if not (root - modulus <= step <= root - 1):
+            raise AssertionError("CRT step was not placed in the expected window")
+        steps.append(step)
+
+    packet_parameters = tuple(
+        _sparse_packet_parameters_for_step(n, step) for step in steps
+    )
+    next_steps = tuple(parameter[1] for parameter in packet_parameters)
+    frobenius_numbers = tuple(parameter[2] for parameter in packet_parameters)
+    r_bounds = tuple(parameter[5] for parameter in packet_parameters)
+    s_bounds = tuple(parameter[6] for parameter in packet_parameters)
+
+    x_packets = tuple(
+        tuple(term * step for term in range(r_bound + 1))
+        for step, r_bound in zip(steps, r_bounds)
+    )
+    y_packets = tuple(
+        tuple(term * next_step for term in range(s_bound + 1))
+        for next_step, s_bound in zip(next_steps, s_bounds)
+    )
+
+    offset_extremes: list[int] = []
+    for x_packet, y_packet, start, g in zip(
+        x_packets, y_packets, normalized_starts, frobenius_numbers
+    ):
+        offset_extremes.extend((x_packet[0], x_packet[-1]))
+        offset_extremes.extend((start - g + y_packet[0], start - g + y_packet[-1]))
+
+    for i, (start_i, g_i) in enumerate(
+        zip(normalized_starts, frobenius_numbers)
+    ):
+        for j, (start_j, g_j) in enumerate(
+            zip(normalized_starts, frobenius_numbers)
+        ):
+            offset_extremes.extend(
+                (
+                    x_packets[i][0] + x_packets[j][0],
+                    x_packets[i][-1] + x_packets[j][-1],
+                )
+            )
+            offset_extremes.extend(
+                (
+                    start_j - g_j + x_packets[i][0] + y_packets[j][0],
+                    start_j - g_j + x_packets[i][-1] + y_packets[j][-1],
+                )
+            )
+            offset_extremes.extend(
+                (
+                    start_i
+                    + start_j
+                    - g_i
+                    - g_j
+                    + y_packets[i][0]
+                    + y_packets[j][0],
+                    start_i
+                    + start_j
+                    - g_i
+                    - g_j
+                    + y_packets[i][-1]
+                    + y_packets[j][-1],
+                )
+            )
+
+    offset_radius = max(abs(value) for value in offset_extremes)
+    separation_scale = 2 * offset_radius + 2
+    labels = tuple(separation_scale * 4**index for index in range(q))
+
+    values: set[int] = set()
+    for label, start, g, x_packet, y_packet in zip(
+        labels, normalized_starts, frobenius_numbers, x_packets, y_packets
+    ):
+        values.update(label + term for term in x_packet)
+        values.update(start - g - label + term for term in y_packet)
+
+    return SparseCrtSeparatedConstruction(
+        starts=normalized_starts,
+        n=n,
+        primes=primes,
+        modulus=modulus,
+        minimum_root=minimum_root,
+        minimum_spacing=3 * n,
+        separation_scale=separation_scale,
+        labels=labels,
+        steps=tuple(steps),
+        next_steps=next_steps,
+        frobenius_numbers=frobenius_numbers,
+        r_bounds=r_bounds,
+        s_bounds=s_bounds,
+        x_packets=x_packets,
+        y_packets=y_packets,
         values=tuple(sorted(values)),
     )

@@ -67,6 +67,9 @@ python -m interval_bases construct `
 python -m interval_bases sparse-pair-construct `
   --starts=0,50,150 `
   --length 16
+python -m interval_bases sparse-crt-construct `
+  --starts=0,529200 `
+  --length 176400
 python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-element 18
 ```
 
@@ -93,6 +96,13 @@ The `sparse-pair-construct` command builds the pair-sum-separated sparse
 multi-interval model from the paper and uses `interval_starts_of_length` to
 verify that the length-`n` interval starts are exactly the prescribed starts.
 
+The `sparse-crt-construct` command builds the arbitrary-start sparse model
+from the CRT-incompatible colour theorem. It records the chosen primes,
+modulus, CRT steps, packet bounds, and positional labels. By default its
+verification is structural, following the congruence proof in the paper;
+`--include-sumset` additionally enumerates `2A` and should only be used for
+small examples, such as the one-interval case.
+
 ## Lean Verification
 
 The arithmetic, representation-decoding, exceptional-count uniqueness,
@@ -115,7 +125,10 @@ quadratic diameter upper and lower bounds, tightened Bertrand-prime estimate,
 exact cardinality after translation, and the final separated-interval
 wrapper. Lean also selects a midpoint translation, centered radius, and scale
 automatically. Exact
-Python tests and the saved certificate provide an independent computational check.
+Python tests and the saved certificate provide an independent computational
+check. The sparse Frobenius, pair-sum-separated, and CRT-incompatible
+constructions are implemented and tested in Python but are not part of the
+Lean formalization boundary.
 
 ## Classical Cross-Checks
 

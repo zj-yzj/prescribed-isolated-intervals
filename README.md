@@ -7,7 +7,7 @@ work from the manuscript, code, Lean formalization, certificates, or
 documentation without prior written permission.
 
 This repository supports a constructive study of the multi-interval questions
-numbered Problems 14-16 in Melvyn Nathanson's June 8, 2026 revision of
+numbered Problems 14-16 in Melvyn Nathanson's June 8, 2026 draft revision of
 [*Problems in additive number theory, VII*][nathanson]. The main result
 implemented here is an explicit construction of a finite integer set `A` whose
 `h`-fold sumset has any prescribed, sufficiently separated family of
@@ -30,9 +30,12 @@ double sumset: for `n >= 16`, the starts-only single-interval problem can be
 realized with `O(sqrt(n))` elements, and a counting lower bound shows that
 this order is best possible. Under an additional pair-sum separation
 hypothesis on the prescribed starts, the same packet gives a sparse
-multi-interval variant with `O(q sqrt(n))` elements. These sparse
-constructions optimize cardinality rather than complete isolation, so they do
-not replace the arbitrary-placement theorem above.
+multi-interval variant with `O(q sqrt(n))` elements. A CRT-incompatible
+colour variant removes the pair-sum separation assumption for fixed `q` and
+large `n`, at the cost of requiring the target intervals to be separated on
+the scale of `3n`. These sparse constructions optimize cardinality rather
+than complete isolation, so they do not replace the arbitrary-placement
+theorem above.
 
 ## Setup
 
@@ -87,6 +90,14 @@ python -m interval_bases sparse-pair-construct `
   --length 16
 ```
 
+Generate the CRT-incompatible sparse construction for arbitrary starts:
+
+```powershell
+python -m interval_bases sparse-crt-construct `
+  --starts=0,529200 `
+  --length 176400
+```
+
 Run exact classical checks and bounded exploratory scans:
 
 ```powershell
@@ -105,6 +116,9 @@ python -m interval_bases strong-single-scan --max-length 8 --max-k 6 --max-eleme
   available for `h = 2`.
 - `sparse-pair-construct` builds the pair-sum separated sparse construction
   and verifies the starts of all length-`n` intervals in `2A`.
+- `sparse-crt-construct` builds the arbitrary-start sparse construction using
+  CRT-incompatible packet steps. By default it reports the structural
+  verification data; `--include-sumset` is intended only for small examples.
 - `oeis-check` computes exact values of `n_h(k)` and compares selected values
   with [OEIS A001208][a001208] and [OEIS A001209][a001209].
 - `scan` is exploratory. Nonnegative results are bounded-window results unless
@@ -163,6 +177,9 @@ The Bose--Chowla diameter refinement in the paper uses the classical
 finite-field theorem of Bose and Chowla as an external mathematical input; the
 label-packaging argument follows the same separated-label principle, but the
 finite-field construction itself is not formalized here.
+The sparse Frobenius, pair-sum-separated, and CRT-incompatible constructions
+are currently paper proofs with Python implementations, not Lean theorems.
+
 ## Paper And Documentation
 
 - [`paper/prescribed-isolated-intervals.tex`](paper/prescribed-isolated-intervals.tex)

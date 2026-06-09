@@ -26,6 +26,10 @@ Completed:
 8. The `sparse-pair-construct` command constructs and verifies this
    pair-separated sparse model by enumerating all length-`n` interval starts
    in `2A`.
+9. A CRT-incompatible sparse multi-interval theorem now removes the pair-sum
+   separation hypothesis for fixed `q` and sufficiently large `n`, at the cost
+   of requiring spacing on the scale of `3n`; the corresponding
+   `sparse-crt-construct` command records the structural certificate.
 
 Remaining numerical polish: retaining the target count directly in
 `b_r = 2p^2 + 2pr + (r^2 mod p)` gives a slightly smaller prime-level upper
@@ -50,11 +54,10 @@ to understand cardinality:
 
 1. prove a lower bound for arbitrary multi-interval isolated patterns that is
    stronger than the trivial multiset count;
-2. weaken the pair-sum separation hypothesis in the sparse multi-interval
-   theorem, or prove that some additive separation is necessary for this
-   packet method;
-3. isolate a clean obstruction for arbitrary starts coming from the
-   same-colour sums indexed by `c_i + c_j`.
+2. reduce the large `q`-dependent CRT threshold or the `3n` spacing in the
+   arbitrary-start sparse theorem;
+3. prove whether some spacing beyond `n + 2` is necessary for sparse
+   starts-only multi-interval constructions with `O(q sqrt(n))` elements.
 4. compare the bounded strong-single-interval minima against classical
    postage-stamp extremal bases to see whether a sharper theorem is already
    hidden in known `n_2(k)` data.

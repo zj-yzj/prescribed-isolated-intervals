@@ -28,7 +28,7 @@ sumset contains any prescribed finite target set and whose remaining elements
 are isolated. As a consequence, every sufficiently separated family of
 intervals can be prescribed as exactly the nontrivial intervals in an
 $h$-fold sumset. This answers the multi-interval questions numbered
-Problems 14--16 in Nathanson's June 8, 2026 revision of
+Problems 14--16 in Nathanson's June 8, 2026 draft revision of
 \href{https://arxiv.org/abs/2605.26425}{\emph{Problems in additive number
 theory, VII}}. In fact the required gap threshold is the minimal value
 $N_q=n+2$ allowed by the formulation, and the construction has
@@ -45,17 +45,21 @@ Finally, we study cardinality separately from complete isolation. A two-colour
 bounded Frobenius packet gives a single-interval double-sumset construction
 with $O(\sqrt n)$ elements, which is optimal in order. Under an additional
 pair-sum separation hypothesis on the starts, the same packet gives an
-$O(q\sqrt n)$ starts-only multi-interval construction. The main separation,
-interval-family, cardinality, translation, diameter, and shifted-Sidon
-arguments have been checked in Lean 4 with Mathlib.
+$O(q\sqrt n)$ starts-only multi-interval construction. A second sparse
+multi-interval construction uses Chinese-remainder incompatible colours to
+remove the pair-sum separation hypothesis, at the cost of a $q$-dependent
+large-$n$ threshold and larger spacing between the prescribed intervals. The
+main separation, interval-family, cardinality, translation, diameter, and
+shifted-Sidon arguments have been checked in Lean 4 with Mathlib.
 \end{abstract}
 
 \section{Introduction}
 
 Nathanson's problem list on additive $h$-bases for intervals asks how much
 control is possible over the intervals contained in finite sumsets. In a
-June 8, 2026 revision, the single-interval double-sumset case is constructed
-directly, and the remaining multi-interval questions ask whether one can
+June 8, 2026 draft revision, the single-interval double-sumset case is
+constructed directly, and the remaining multi-interval questions ask whether
+one can
 prescribe a separated set
 \[
  C=\{c_1<\cdots<c_q\}
@@ -110,7 +114,10 @@ and $a+1$ produces one long interval in the cross-sum while the two same-colour
 sumsets have no adjacent elements. This gives an order-optimal sparse
 single-interval construction with $O(\sqrt n)$ elements, and an
 $O(q\sqrt n)$ multi-interval version whenever the pair sums $c_i+c_j$ are
-also separated.
+also separated. A further CRT variant gives the same $O(q\sqrt n)$
+cardinality order for arbitrary prescribed starts, provided $q$ is fixed,
+$n$ is sufficiently large in terms of $q$, and the prescribed intervals are
+separated on the scale of $3n$.
 
 \section{A short separation lemma}
 
@@ -317,7 +324,7 @@ Apply Theorem~\ref{thm:main} with $C=\{c\}$.
 \end{proof}
 
 \begin{corollary}[Nathanson's revised multi-interval problems]\label{cor:problems}
-In the notation of Problems 14--16 in Nathanson's June 8, 2026 revision,
+In the notation of Problems 14--16 in Nathanson's June 8, 2026 draft revision,
 Problems 14 and 15 are true, and Problem 16 is true for every $h\geq 3$.
 More precisely, one can take the threshold
 \[
@@ -630,13 +637,140 @@ Finally,
 by the estimates already proved in Theorem~\ref{thm:sparse-single}.
 \end{proof}
 
+\begin{theorem}[Sparse multi-intervals with incompatible colours]
+\label{thm:sparse-crt}
+Let $q\geq1$, let $p_1,\ldots,p_q$ be distinct primes at least $5$, and put
+\[
+ W=6\prod_{i=1}^q p_i.
+\]
+Let $n\geq1$ satisfy
+\[
+ \lfloor\sqrt n\rfloor\geq 4W,
+\]
+and let
+\[
+ C=\{c_1<\cdots<c_q\}\subseteq\Z
+\]
+with
+\[
+ c_{i+1}-c_i\geq 3n
+ \qquad (1\leq i<q).
+\]
+Then there is a finite set $A\subseteq\Z$ such that the intervals
+$[x,x+n]\subseteq 2A$ are exactly the intervals $[c_i,c_i+n]$, and
+\[
+ |A|\leq q(5\sqrt n+1).
+\]
+In particular, for each fixed $q$ this gives a starts-only multi-interval
+construction with $O_q(\sqrt n)$ elements and without any pair-sum separation
+assumption on $C+C$; uniformly, the displayed bound is $O(q\sqrt n)$.
+\end{theorem}
+
+\begin{proof}
+Put $N=\lfloor\sqrt n\rfloor$. For each $i$ choose, by the Chinese remainder
+theorem, the unique integer $a_i\in[N-W,N-1]$ satisfying
+\[
+\begin{aligned}
+ a_i&\equiv0 \pmod 2,\\
+ a_i&\equiv-1 \pmod 3,\\
+ a_i&\equiv-1 \pmod {p_i},\\
+ a_i&\equiv0 \pmod {p_j}\qquad (j\neq i).
+\end{aligned}
+\]
+The interval $[N-W,N-1]$ contains one representative of every residue class
+modulo $W$. Since $N\geq4W$, we have $a_i\geq3N/4$; and since
+$N=\lfloor\sqrt n\rfloor$, this gives
+\[
+ \frac{\sqrt n}{2}\leq a_i\leq \sqrt n-1.
+\]
+Put $b_i=a_i+1$. Then $\gcd(a_i,b_i)=1$, all $a_i$ are even, all $b_i$ are
+divisible by $3$, and for $i\neq j$ the two integers $a_i$ and $b_j$ are both
+divisible by $p_j$.
+
+For each $i$, repeat the parameter choice from
+Theorem~\ref{thm:sparse-single} with $a_i$ in place of $a$. Thus
+\[
+ g_i=a_i(a_i-1),\qquad n_{0,i}=n-(2a_i-1),
+\]
+choose $v_i\in\{0,\ldots,a_i-1\}$ with $v_i\equiv n_{0,i}\pmod {a_i}$, and
+put
+\[
+ u_i=\frac{n_{0,i}-(a_i+1)v_i}{a_i},\qquad
+ R_i=a_i+u_i,\qquad S_i=a_i-1+v_i.
+\]
+Because $a_i+1\leq\sqrt n$, the same estimates as before give
+$u_i\geq0$, $R_i\geq b_i-1$, $S_i\geq a_i-1$, and
+\[
+ a_iR_i+b_iS_i-2g_i=n,\qquad g_i<n.
+\]
+Let
+\[
+ X_i=\{0,a_i,2a_i,\ldots,R_i a_i\},
+ \qquad
+ Y_i=\{0,b_i,2b_i,\ldots,S_i b_i\}.
+\]
+Then Lemma~\ref{lem:frobenius-packet} shows that
+$c_i-g_i+X_i+Y_i$ has the unique interval of length $n$ equal to
+$[c_i,c_i+n]$.
+
+It remains to keep all unmatched colour sums from interacting. Choose
+positional labels $\ell_i=M4^{i-1}$ with $M$ so large that packets carrying
+different nonzero label vectors are separated from one another and from all
+zero-label packets by at least one missing integer. Concretely, let $T_0$ be
+the maximum absolute value of an element occurring in any unlabelled two-term
+packet
+\[
+ X_i+X_j,\qquad c_j-g_j+X_i+Y_j,\qquad
+ c_i+c_j-g_i-g_j+Y_i+Y_j,
+\]
+and take $M=2T_0+2$. Lemma~\ref{lem:separation}, with $B=4$, implies that
+distinct two-term label vectors of $\ell^1$ norm at most $2$ differ in their
+label contribution by at least $M$, and the unlabelled offsets can change a
+distance by at most $2T_0$. For the sign patterns that occur here, a nonzero
+two-term label vector determines its packet, up to the harmless order of the
+two summands in $X_i+X_j$ or $Y_i+Y_j$.
+
+Define
+\[
+ A=\bigcup_{i=1}^q(\ell_i+X_i)
+ \ \cup\
+ \bigcup_{i=1}^q(c_i-g_i-\ell_i+Y_i).
+\]
+The matched sums $(\ell_i+X_i)+(c_i-g_i-\ell_i+Y_i)$ are precisely the
+zero-label packets considered above. These packets lie in
+$[c_i-g_i,c_i+n+g_i]$. Since $g_i<n$ and $c_{i+1}-c_i\geq3n$, distinct
+zero-label packets are separated by at least one missing integer.
+
+Every unmatched packet has no adjacent elements. Indeed, $X_i+X_j$ lies in
+one residue class modulo $2$, $Y_i+Y_j$ lies in one residue class modulo $3$,
+and, for $i\neq j$, $X_i+Y_j$ lies in one residue class modulo $p_j$.
+Because different nonzero label packets are separated from one another and
+from the zero-label packets, no interval of length $n$ can be formed by an
+unmatched packet or by joining different packets. Thus the only intervals
+$[x,x+n]\subseteq2A$ are the prescribed intervals $[c_i,c_i+n]$.
+
+Finally,
+\[
+ |A|\leq\sum_{i=1}^q\bigl((R_i+1)+(S_i+1)\bigr).
+\]
+Since $a_i\geq\sqrt n/2$ and $a_i\leq\sqrt n$, the estimates used in
+Theorem~\ref{thm:sparse-single} give
+\[
+ R_i+1\leq 3\sqrt n+1,\qquad S_i+1\leq2\sqrt n.
+\]
+Summing over $i$ proves the cardinality bound.
+\end{proof}
+
 \begin{remark}
 The pair-sum separation hypothesis in Theorem~\ref{thm:sparse-pair-separated}
 is exactly what prevents the same-colour sums $Y_i+Y_j$ from interlacing. Thus
-the sparse argument does not replace Theorem~\ref{thm:main} for arbitrary
-multi-interval placement. It instead shows that the linear cardinality in the
-stronger theorem is a price paid for complete isolation and unrestricted
-placement of the starts.
+that theorem has a smaller construction and a milder large-$n$ threshold when
+the additional additive separation is available. The CRT construction in
+Theorem~\ref{thm:sparse-crt} removes that additive hypothesis by assigning
+incompatible colours to different starts, but it asks for larger spacing
+between the prescribed intervals and has constants depending on $q$. Neither
+sparse argument replaces Theorem~\ref{thm:main} for complete isolation and
+arbitrary placement of the starts.
 \end{remark}
 
 \section{A polynomial diameter refinement}
@@ -1027,7 +1161,7 @@ stronger lower bounds outside these label frameworks, remains open.
 
 \section{Relation with the single-interval construction}
 
-Nathanson's June 8 revision contains a direct construction for one prescribed
+Nathanson's June 8 draft revision contains a direct construction for one prescribed
 interval in a double sumset. The special case $q=1$ and $h=2$ of
 Corollary~\ref{cor:single} gives another route to the same type of
 single-interval conclusion, but this is not the main point of the present
@@ -1050,8 +1184,11 @@ lower bound for the starts-only single-interval problem.
 Proposition~\ref{prop:sparse-lower} shows that the resulting $O(\sqrt n)$
 cardinality is optimal up to the absolute constant.
 Theorem~\ref{thm:sparse-pair-separated} extends the same packet to several
-starts when the pair-sum set $C+C$ is separated, while
-Theorem~\ref{thm:main} remains the arbitrary-placement result.
+starts when the pair-sum set $C+C$ is separated. The incompatible-colour
+construction in Theorem~\ref{thm:sparse-crt} removes the pair-sum condition
+for fixed $q$ and large $n$, at the cost of a larger spacing hypothesis.
+Theorem~\ref{thm:main} remains the arbitrary-placement and complete-isolation
+result.
 
 \section{Reproducibility}
 
@@ -1077,7 +1214,10 @@ explicit pair-sum argument over $\mathbb F_p$. It also checks translation
 invariance, quadratic diameter upper and lower bounds, tightened
 Bertrand-prime selection, exact cardinality after translation, and the final
 separated-interval wrapper. The midpoint translation, radius, and scale are
-selected automatically from an enclosing interval.
+selected automatically from an enclosing interval. The sparse Frobenius,
+pair-sum-separated, and CRT-incompatible constructions are implemented in the
+Python package and are included as ordinary paper proofs, not as Lean
+theorems.
 
 \begin{thebibliography}{9}
 

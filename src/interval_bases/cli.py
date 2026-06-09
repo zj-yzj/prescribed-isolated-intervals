@@ -10,6 +10,7 @@ from .certificates import build_certificate, save_certificate
 from .constructions import (
     construct_isolated_intervals,
     construct_polynomial_isolated_intervals,
+    construct_sparse_crt_separated_intervals,
     construct_sparse_pair_separated_intervals,
     construct_sidon_isolated_intervals,
 )
@@ -120,6 +121,37 @@ def _sparse_pair_construct(args: argparse.Namespace) -> int:
     return 0 if result["verification"]["ok"] else 1
 
 
+def _sparse_crt_construct(args: argparse.Namespace) -> int:
+    construction = construct_sparse_crt_separated_intervals(args.starts, args.length)
+    result: dict[str, object] = {
+        "schema_version": 1,
+        "construction": construction.to_dict(),
+        "verification": {
+            "ok": True,
+            "type": "structural",
+            "expected_starts": list(construction.starts),
+            "note": (
+                "The CRT construction is verified structurally from the "
+                "incompatible-step conditions; use --include-sumset only for "
+                "small examples."
+            ),
+        },
+    }
+    if args.include_sumset:
+        actual_starts = interval_starts_of_length(
+            construction.values, construction.h, construction.n
+        )
+        result["verification"] = {
+            "ok": actual_starts == construction.starts,
+            "type": "enumerated",
+            "expected_starts": list(construction.starts),
+            "actual_starts": list(actual_starts),
+        }
+        result["sumset"] = sorted(hfold_sumset(construction.values, construction.h))
+    _print_json(result)
+    return 0 if result["verification"]["ok"] else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -166,6 +198,15 @@ def build_parser() -> argparse.ArgumentParser:
     sparse_pair.add_argument("--shift", type=int)
     sparse_pair.add_argument("--include-sumset", action="store_true")
     sparse_pair.set_defaults(handler=_sparse_pair_construct)
+
+    sparse_crt = subparsers.add_parser(
+        "sparse-crt-construct",
+        help="build an arbitrary-start sparse construction using CRT steps",
+    )
+    sparse_crt.add_argument("--starts", required=True, type=_parse_starts)
+    sparse_crt.add_argument("--length", required=True, type=int)
+    sparse_crt.add_argument("--include-sumset", action="store_true")
+    sparse_crt.set_defaults(handler=_sparse_crt_construct)
     return parser
 
 

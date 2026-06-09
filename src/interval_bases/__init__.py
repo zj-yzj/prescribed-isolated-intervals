@@ -3,9 +3,11 @@
 from .certificates import build_certificate, save_certificate
 from .constructions import (
     IsolatedIntervalConstruction,
+    SparseCrtSeparatedConstruction,
     SparsePairSeparatedConstruction,
     construct_isolated_intervals,
     construct_polynomial_isolated_intervals,
+    construct_sparse_crt_separated_intervals,
     construct_sparse_pair_separated_intervals,
     construct_sidon_isolated_intervals,
 )
@@ -24,11 +26,13 @@ __all__ = [
     "Interval",
     "IsolatedIntervalConstruction",
     "PatternVerification",
+    "SparseCrtSeparatedConstruction",
     "SparsePairSeparatedConstruction",
     "build_certificate",
     "consecutive_intervals",
     "construct_isolated_intervals",
     "construct_polynomial_isolated_intervals",
+    "construct_sparse_crt_separated_intervals",
     "construct_sparse_pair_separated_intervals",
     "construct_sidon_isolated_intervals",
     "ell",

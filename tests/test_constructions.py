@@ -1,5 +1,6 @@
 import random
 from itertools import product
+from math import isqrt
 
 import pytest
 
@@ -7,6 +8,7 @@ from interval_bases import (
     build_certificate,
     construct_isolated_intervals,
     construct_polynomial_isolated_intervals,
+    construct_sparse_crt_separated_intervals,
     construct_sparse_pair_separated_intervals,
     construct_sidon_isolated_intervals,
     interval_starts_of_length,
@@ -162,3 +164,40 @@ def test_sparse_pair_separated_rejects_small_shift() -> None:
         construct_sparse_pair_separated_intervals(
             (0, 50, 150), 16, shift=construction.minimum_shift - 1
         )
+
+
+def test_sparse_crt_single_interval_can_be_enumerated() -> None:
+    construction = construct_sparse_crt_separated_intervals((0,), 14_400)
+
+    assert construction.modulus == 30
+    assert construction.cardinality <= construction.cardinality_upper_bound
+    assert construction.cardinality_upper_bound <= 5 * isqrt(construction.n) + 1
+    assert interval_starts_of_length(construction.values, 2, construction.n) == (0,)
+
+
+def test_sparse_crt_multi_interval_structure() -> None:
+    n = 705_600
+    construction = construct_sparse_crt_separated_intervals((0, 3 * n), n)
+
+    assert construction.primes == (5, 7)
+    assert construction.modulus == 210
+    assert construction.minimum_root == 840
+    assert construction.minimum_spacing == 3 * n
+    assert construction.cardinality <= construction.cardinality_upper_bound
+    assert construction.cardinality_upper_bound <= 2 * (5 * isqrt(n) + 1)
+
+    for index, step in enumerate(construction.steps):
+        assert step % 2 == 0
+        assert step % 3 == 2
+        for other_index, prime in enumerate(construction.primes):
+            if other_index == index:
+                assert step % prime == prime - 1
+                assert (step + 1) % prime == 0
+            else:
+                assert step % prime == 0
+                assert (step + 1) % prime == 1
+
+
+def test_sparse_crt_rejects_close_starts() -> None:
+    with pytest.raises(ValueError, match="3n"):
+        construct_sparse_crt_separated_intervals((0, 100), 14_400)
