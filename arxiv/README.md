@@ -22,3 +22,13 @@ Before upload:
 4. If Nathanson's public arXiv version has not yet caught up with the
    June 8 draft revision, keep the paper's wording as `June 8, 2026 draft
    revision`.
+
+To generate a local upload bundle:
+
+```powershell
+Compress-Archive -LiteralPath arxiv\main.tex -DestinationPath arxiv\prescribed-isolated-intervals-arxiv-v1.zip -Force
+tar -tf arxiv\prescribed-isolated-intervals-arxiv-v1.zip
+```
+
+The zip should list exactly `main.tex`. The generated zip is ignored by Git
+because it is a local upload artifact.
