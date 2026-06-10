@@ -6,8 +6,8 @@ granted to copy, redistribute, publish, submit, or prepare derivative scholarly
 work from the manuscript, code, Lean formalization, certificates, or
 documentation without prior written permission.
 
-This repository supports a constructive study of the multi-interval questions
-numbered Problems 14-16 in Melvyn Nathanson's June 8, 2026 draft revision of
+This repository supports a constructive study of the public multi-interval
+questions numbered Problems 14 and 15 in version 3 of Melvyn Nathanson's
 [*Problems in additive number theory, VII*][nathanson]. The main result
 implemented here is an explicit construction of a finite integer set `A` whose
 `h`-fold sumset has any prescribed, sufficiently separated family of

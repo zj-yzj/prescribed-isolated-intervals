@@ -19,9 +19,9 @@ Before upload:
    the current `arxiv/main.tex`.
 2. Run `python -m pytest` and `lake build`.
 3. Check the TeX log for unresolved references or overfull boxes.
-4. If Nathanson's public arXiv version has not yet caught up with the
-   June 8 draft revision, keep the paper's wording as `June 8, 2026 draft
-   revision`.
+4. Confirm that the manuscript refers to Nathanson's public
+   `arXiv:2605.26425v3` numbering, where the relevant multi-interval questions
+   are Problems 14 and 15.
 
 To generate a local upload bundle:
 

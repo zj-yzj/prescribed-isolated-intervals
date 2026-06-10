@@ -27,8 +27,8 @@ We give an explicit construction of a finite set of integers whose $h$-fold
 sumset contains any prescribed finite target set and whose remaining elements
 are isolated. As a consequence, every sufficiently separated family of
 intervals can be prescribed as exactly the nontrivial intervals in an
-$h$-fold sumset. This answers the multi-interval questions numbered
-Problems 14--16 in Nathanson's June 8, 2026 draft revision of
+$h$-fold sumset. This answers the public multi-interval questions numbered
+Problems 14 and 15 in version 3 of Nathanson's
 \href{https://arxiv.org/abs/2605.26425}{\emph{Problems in additive number
 theory, VII}}. In fact the required gap threshold is the minimal value
 $N_q=n+2$ allowed by the formulation, and the construction has
@@ -56,18 +56,17 @@ shifted-Sidon arguments have been checked in Lean 4 with Mathlib.
 \section{Introduction}
 
 Nathanson's problem list on additive $h$-bases for intervals asks how much
-control is possible over the intervals contained in finite sumsets. In a
-June 8, 2026 draft revision, the single-interval double-sumset case is
-constructed directly, and the remaining multi-interval questions ask whether
-one can
+control is possible over the intervals contained in finite sumsets. In
+version 3, posted on June 8, 2026, the single-interval double-sumset case is
+constructed directly, and the public multi-interval questions, Problems 14
+and 15, ask whether one can
 prescribe a separated set
 \[
  C=\{c_1<\cdots<c_q\}
 \]
-of starting points so that the only intervals of length $n$ in $2A$ start at
-the elements of $C$, with a stronger version forbidding all additional
-proper intervals. The same revision asks for the corresponding higher-fold
-problem when $h\geq 3$.
+of starting points so that the only intervals of length $n$ start at the
+elements of $C$, with a stronger version forbidding all additional proper
+intervals. The stated problems allow arbitrary fixed $h\geq 2$.
 
 The point of this note is that the multi-interval problem is more naturally a
 finite-target problem. Let
@@ -323,9 +322,10 @@ length $n$.
 Apply Theorem~\ref{thm:main} with $C=\{c\}$.
 \end{proof}
 
-\begin{corollary}[Nathanson's revised multi-interval problems]\label{cor:problems}
-In the notation of Problems 14--16 in Nathanson's June 8, 2026 draft revision,
-Problems 14 and 15 are true, and Problem 16 is true for every $h\geq 3$.
+\begin{corollary}[Nathanson's public multi-interval problems]\label{cor:problems}
+In the notation of Problems 14 and 15 in version 3 of Nathanson's
+\emph{Problems in additive number theory, VII}, both problems are true for
+every $h\geq 2$.
 More precisely, one can take the threshold
 \[
  N_q=n+2
@@ -347,12 +347,11 @@ $d=2$ gives
 \]
 where every point of $E$ is isolated from every other point of $hA$.
 
-For $h=2$, the only intervals of length $n$ in $2A$ are the displayed
-intervals $[c_i,c_i+n]$, proving Problem 14. Since every element outside
-$S$ is isolated and at distance at least two from $S$, every interval of
-length one in $2A$ lies inside one of the intervals $[c_i,c_i+n]$, proving
-the stronger Problem 15. The same argument with the prescribed value
-$h\geq 3$ proves Problem 16.
+The only intervals of length $n$ in $hA$ are the displayed intervals
+$[c_i,c_i+n]$, proving Problem 14. Since every element outside $S$ is
+isolated and at distance at least two from $S$, every interval of length one
+in $hA$ lies inside one of the intervals $[c_i,c_i+n]$, proving the stronger
+Problem 15.
 \end{proof}
 
 \begin{remark}[Diameter bound]
@@ -1167,7 +1166,7 @@ stronger lower bounds outside these label frameworks, remains open.
 
 \section{Relation with the single-interval construction}
 
-Nathanson's June 8 draft revision contains a direct construction for one prescribed
+Nathanson's version 3 contains a direct construction for one prescribed
 interval in a double sumset. The special case $q=1$ and $h=2$ of
 Corollary~\ref{cor:single} gives another route to the same type of
 single-interval conclusion, but this is not the main point of the present
@@ -1237,7 +1236,7 @@ Melvyn B. Nathanson,
 \emph{Problems in additive number theory, VII: The structure of additive
 $h$-bases for $n$},
 preprint, 2026.
-\href{https://arxiv.org/abs/2605.26425}{arXiv:2605.26425}.
+\href{https://arxiv.org/abs/2605.26425}{arXiv:2605.26425v3}.
 
 \end{thebibliography}
 

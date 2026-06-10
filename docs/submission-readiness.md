@@ -5,14 +5,14 @@ posting or journal submission.
 
 ## Completed mathematical core
 
-- The paper is written as an answer to Nathanson's revised multi-interval
-  Problems 14--16, using the wording "June 8, 2026 draft revision".
+- The paper is written as an answer to Nathanson's public multi-interval
+  Problems 14 and 15 in arXiv:2605.26425v3.
 - The main theorem realizes any finite target set inside an `h`-fold sumset
   with all non-target sums isolated.
 - The interval corollary gives the minimal formulation threshold `N_q = n + 2`
   and cardinality `|A| = 2 q (n + 1)`.
-- The proof handles `h >= 2` and `d >= 2`, including the double-sumset case
-  needed for Problems 14 and 15.
+- The proof handles `h >= 2` and `d >= 2`, giving a uniform answer to both
+  public multi-interval problems.
 - Diameter refinements are included via finite moment labels, Bose--Chowla
   modular `B_H` labels, and shifted-Sidon labels for `h = 2`.
 - Cardinality refinements are included for starts-only double-sumset problems:
@@ -35,9 +35,9 @@ posting or journal submission.
 
 ## Remaining human review before a journal submission
 
-- Re-read Nathanson's newest public arXiv version and confirm that the
-  numbering and wording of Problems 14--16 still match the June 8 draft
-  revision.
+- Re-read Nathanson's newest public arXiv version before submission and
+  confirm that the numbering and wording of Problems 14 and 15 still match
+  arXiv:2605.26425v3.
 - Have an additive-combinatorics or additive-number-theory reader check the
   CRT sparse theorem, because it is the newest and most delicate strengthening.
 - Confirm that the starts-only sparse theorems are never presented as
@@ -51,7 +51,7 @@ Dear Professor Nathanson,
 
 Thank you again for sending the revised draft and for your encouraging reply.
 I have continued to revise the manuscript. The current version is written as
-an answer to the multi-interval Problems 14--16 in your June 8 draft revision.
+an answer to the public multi-interval Problems 14 and 15 in arXiv:2605.26425v3.
 The main construction realizes an arbitrary finite target set in an `h`-fold
 sumset, with all remaining sums isolated, and gives the threshold `N_q = n+2`
 and cardinality `2q(n+1)` for the interval formulation.
