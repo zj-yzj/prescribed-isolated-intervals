@@ -67,7 +67,7 @@ Use this as an adversarial review pass before circulating the draft.
 - [ ] Verify that the positional labels separate all nonzero two-term colour
   packets from one another and from the zero-label packets.
 - [ ] Confirm that the sparse theorems are starts-only; they are not used as
-  proofs of the complete-isolation Problems 15--16.
+  proofs of the complete-isolation answer to Problems 14 and 15.
 
 ## Quadratic double-sumset refinement
 
