@@ -15,6 +15,7 @@ build/
 # LaTeX build products
 output/
 arxiv/*.zip
+/prescribed-isolated-intervals.pdf
 *.aux
 *.bbl
 *.blg

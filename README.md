@@ -1,4 +1,4 @@
-# Signed Interval Additive Bases
+# Prescribed Isolated Intervals in Higher Fold Sumsets
 
 Copyright (c) 2026 Zijie Yu. All rights reserved. This repository is public
 for timestamped inspection and reproducibility review only. No permission is

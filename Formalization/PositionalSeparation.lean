@@ -1,7 +1,7 @@
 import Mathlib
 
 /-!
-# Positional separation for signed interval bases
+# Positional separation for prescribed isolated intervals
 
 This file formalizes the arithmetic separation lemma used in
 `research/draft.tex`. The combinatorial construction is developed on top of

@@ -1,4 +1,4 @@
-"""Explicit constructions of signed interval bases."""
+"""Explicit constructions for prescribed interval patterns in sumsets."""
 
 from __future__ import annotations
 

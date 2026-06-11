@@ -1,4 +1,4 @@
-"""Command-line interface for reproducible interval-basis experiments."""
+"""Command-line interface for prescribed-interval sumset experiments."""
 
 from __future__ import annotations
 

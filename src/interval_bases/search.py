@@ -1,4 +1,4 @@
-"""Finite searches for classical and signed interval bases."""
+"""Finite searches for classical and signed sumset interval problems."""
 
 from __future__ import annotations
 

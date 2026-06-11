@@ -1,4 +1,4 @@
-"""Tools for experiments with interval additive bases."""
+"""Tools for prescribed isolated intervals in higher-fold sumsets."""
 
 from .certificates import build_certificate, save_certificate
 from .constructions import (
